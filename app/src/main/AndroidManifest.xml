@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtuousVoice">
         <activity
+            android:name=".DeviceAdminPolicy"
+            android:exported="true" />
+        <activity
             android:name=".CreatePin"
             android:exported="true" />
         <activity
