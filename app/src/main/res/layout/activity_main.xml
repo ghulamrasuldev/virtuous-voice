@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Vituous Voice"
+        android:text="Virtuous Voice"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold" />

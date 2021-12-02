@@ -11,7 +11,9 @@ class CreatePin : AppCompatActivity() {
         setContentView(R.layout.activity_create_pin)
 
         _btn_confirm_pin.setOnClickListener{
-            val intent = Intent(this, )
+            val intent = Intent(this, DeviceAdminPolicy::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
