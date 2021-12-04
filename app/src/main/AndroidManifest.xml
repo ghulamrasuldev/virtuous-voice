@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtuousVoice">
         <activity
+            android:name=".ParentSignup"
+            android:exported="true" />
+        <activity
             android:name=".SignIn"
             android:exported="true" />
         <activity
