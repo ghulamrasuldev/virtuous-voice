@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtuousVoice">
         <activity
+            android:name=".IndividualSignup"
+            android:exported="true" />
+        <activity
+            android:name=".ChildSignup"
+            android:exported="true" />
+        <activity
             android:name=".ParentSignup"
             android:exported="true" />
         <activity

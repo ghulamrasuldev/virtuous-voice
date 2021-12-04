@@ -30,5 +30,12 @@ class WelcomeScreen : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        //Taking use to sign up as parent screem
+        _sign_up_as_parent.setOnClickListener{
+            val intent = Intent(this, ParentSignup::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
