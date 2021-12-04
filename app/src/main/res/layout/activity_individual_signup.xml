@@ -1,9 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IndividualSignup">
+    android:background="@color/primary_color"
+    android:padding="16dp"
+    tools:context=".ParentSignup">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Virtuous Voice"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create account as parent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textSize="22dp"/>
+
+            <EditText
+                android:id="@+id/_sign_up_email"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:hint="Enter your email"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColorHint="@color/disabled_white"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/edit_text_background"/>
+
+            <EditText
+                android:id="@+id/_sign_up_username"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:hint="Write a username"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColorHint="@color/disabled_white"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/edit_text_background"/>
+
+            <EditText
+                android:id="@+id/_sign_up_password"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:hint="Enter your password"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColorHint="@color/disabled_white"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/edit_text_background"/>
+
+            <EditText
+                android:id="@+id/_sign_up_verify_password"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:hint="Verify your password"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColorHint="@color/disabled_white"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/edit_text_background"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/_btn_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/white"
+                android:text="Signup"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/button_background"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have account?"
+                android:paddingTop="8dp"
+                android:layout_gravity="end"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign in as"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textSize="24dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/_sign_in_as_parent"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:text="Parent"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/white"
+                android:background="@drawable/button_background"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/_sign_in_as_child"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:text="Child"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/white"
+                android:background="@drawable/button_background"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/_sign_in_as_individual"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:text="Individual"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/white"
+                android:background="@drawable/button_background"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

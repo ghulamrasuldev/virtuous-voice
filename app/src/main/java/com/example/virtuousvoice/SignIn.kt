@@ -10,9 +10,23 @@ class SignIn : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-        //taking user to Parent signup screen
+        //Taking use to sign up as parent screen
         _sign_up_as_parent.setOnClickListener{
             val intent = Intent(this, ParentSignup::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        //Taking use to sign up as child screen
+        _sign_up_as_child.setOnClickListener{
+            val intent = Intent(this, ChildSignup::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        //Taking use to sign up as individual screen
+        _sign_up_as_individual.setOnClickListener{
+            val intent = Intent(this, IndividualSignup::class.java)
             startActivity(intent)
             finish()
         }
