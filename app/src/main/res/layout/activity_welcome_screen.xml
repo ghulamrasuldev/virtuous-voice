@@ -95,6 +95,7 @@
             android:textColor="@color/white"
             android:background="@drawable/button_background"/>
 
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/_sign_up_as_child"
             android:layout_width="match_parent"
