@@ -13,6 +13,7 @@ class WelcomeScreen : AppCompatActivity() {
         //Signing in as Parent
         _sign_in_as_parent.setOnClickListener{
             val intent = Intent(this, SignIn::class.java)
+            intent.putExtra("user","parent")
             startActivity(intent)
             finish()
         }
@@ -20,6 +21,7 @@ class WelcomeScreen : AppCompatActivity() {
         //Signing in as Child
         _sign_in_as_child.setOnClickListener{
             val intent = Intent(this, SignIn::class.java)
+            intent.putExtra("user","child")
             startActivity(intent)
             finish()
         }
@@ -27,6 +29,7 @@ class WelcomeScreen : AppCompatActivity() {
         //Signing in as Individual
         _sign_in_as_individual.setOnClickListener{
             val intent = Intent(this, SignIn::class.java)
+            intent.putExtra("user","individual")
             startActivity(intent)
             finish()
         }

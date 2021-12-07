@@ -9,13 +9,16 @@ class SignIn : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+        val user = intent.getStringExtra("user")
+        _sign_in_as.setText("signing in as " + user)
 
 
         //Signin button
         _btn_sign_in.setOnClickListener{
-//            val intent = Intent(this, ParentHome::class.java)
-//            startActivity(intent)
-//            finish()
+            val intent = Intent(this, TabbedActivity::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
+            finish()
         }
 
         //Taking use to sign up as parent screen
