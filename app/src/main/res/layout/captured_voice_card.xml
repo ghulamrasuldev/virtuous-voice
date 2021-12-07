@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:background="@drawable/card_background">
+
+        <TextView
+            android:id="@+id/_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hi Gama!"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/_captured_date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Date: 01/01/2021"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/_captured_day"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Day: Monday"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/playBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background=""
+                android:layout_marginTop="40dp"
+                android:onClick="playBtnClick"
+                android:backgroundTint="@color/white"/>
+
+            <SeekBar
+                android:id="@+id/positionBar"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:outlineAmbientShadowColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                android:background="@color/white"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
