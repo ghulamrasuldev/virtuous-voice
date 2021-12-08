@@ -34,8 +34,18 @@
             android:background="@drawable/toxic_data_background"
             android:padding="8dp">
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/_captured_voice_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/captured_voice_card"/>
 
+            </ScrollView>
 
         </LinearLayout>
 

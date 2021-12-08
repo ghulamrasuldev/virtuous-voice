@@ -2,7 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    android:layout_margin="4dp"
+    android:backgroundTint="@color/primary_color_variant">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
             android:id="@+id/_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hi Gama!"
+            android:text="Mohsin Nazakat"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:fontFamily="@font/montserrat"
@@ -51,22 +52,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:background="@drawable/player_background">
 
-            <Button
-                android:id="@+id/playBtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background=""
-                android:layout_marginTop="40dp"
-                android:onClick="playBtnClick"
-                android:backgroundTint="@color/white"/>
+            <ImageView
+                android:id="@+id/_play_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_play"
+                android:clickable="true"/>
 
             <SeekBar
                 android:id="@+id/positionBar"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:outlineAmbientShadowColor="@color/white"
                 android:outlineSpotShadowColor="@color/white"
                 android:background="@color/white"/>
