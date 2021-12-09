@@ -32,7 +32,7 @@
             android:orientation="vertical"
             android:layout_gravity="center"
             android:background="@drawable/toxic_data_background"
-            android:padding="8dp">
+            android:padding="4dp">
 
             <ScrollView
                 android:layout_width="match_parent"
