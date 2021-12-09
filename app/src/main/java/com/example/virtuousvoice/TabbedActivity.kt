@@ -14,6 +14,7 @@ class TabbedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabbed)
+
         var user = intent.getStringExtra("user")
         createTabs(user)
     }
