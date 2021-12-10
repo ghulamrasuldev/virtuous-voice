@@ -17,7 +17,7 @@
             android:id="@+id/_test_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email Notification"
+            android:text="Test Audio"
             android:fontFamily="@font/montserrat"
             android:gravity="center"
             android:background="@drawable/button_background"/>

@@ -50,6 +50,19 @@
                 android:background="@drawable/edit_text_background"/>
 
             <EditText
+                android:id="@+id/_sign_up_name"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:hint="Write a name"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColorHint="@color/disabled_white"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/edit_text_background"/>
+
+            <EditText
                 android:id="@+id/_sign_up_username"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -70,6 +83,7 @@
                 android:hint="Enter your password"
                 android:textSize="20sp"
                 android:gravity="center"
+                android:inputType="textPassword"
                 android:textColorHint="@color/disabled_white"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
@@ -83,6 +97,7 @@
                 android:hint="Verify your password"
                 android:textSize="20sp"
                 android:gravity="center"
+                android:inputType="textPassword"
                 android:textColorHint="@color/disabled_white"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"

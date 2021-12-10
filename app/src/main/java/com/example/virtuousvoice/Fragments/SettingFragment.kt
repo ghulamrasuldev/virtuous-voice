@@ -1,25 +1,22 @@
 package com.example.virtuousvoice.Fragments
 
-import android.net.http.HttpResponseCache
+
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.volley.toolbox.HttpResponse
 import com.example.virtuousvoice.R
 import kotlinx.android.synthetic.main.fragment_setting.*
-import kotlinx.coroutines.runBlocking
-import java.io.File
 import java.util.*
 import javax.mail.*
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeBodyPart
 import javax.mail.internet.MimeMessage
 import javax.mail.internet.MimeMultipart
+import kotlin.random.Random.Default.nextInt
 
 
 class SettingFragment : Fragment() {
@@ -32,7 +29,17 @@ class SettingFragment : Fragment() {
 
         _test_email.setOnClickListener{
             val url = "https://virtuous-api.herokuapp.com/"
-            sendEmail()
+            //work here
+
+
+
+
+
+            //work here
+            val flag = randomOutput()
+            if (flag == 1){
+                sendEmail()
+            }
         }
 
     }
@@ -45,13 +52,17 @@ class SettingFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_setting, container, false)
     }
 
+    fun sendFile(){
+
+    }
+
     fun sendEmail(){
 
         //authentication info
         val username = "ghulamrasool.testing@yahoo.com"
         val password = "vtmjjqhvheybeeso"
         val fromEmail = "ghulamrasool.testing@yahoo.com"
-        val toEmail = "ghulam.rasool.uni@gmail.com"
+        val toEmail = "samiya.mehr@gmail.com"
 
         val properties = Properties()
         properties["mail.smtp.auth"] = "true"
@@ -79,7 +90,7 @@ class SettingFragment : Fragment() {
 
             //Text body part
             val textBodyPart = MimeBodyPart()
-            textBodyPart.setText("First Notification")
+            textBodyPart.setText("Test Notification")
 
             //Attachment body part.
 //            val pdfAttachment = MimeBodyPart()
@@ -101,5 +112,12 @@ class SettingFragment : Fragment() {
 //            e.printStackTrace()
 //        }
 
+    }
+
+    //generate random output
+    fun randomOutput(): Int{
+        var result: Int
+        result = 1
+        return result
     }
 }

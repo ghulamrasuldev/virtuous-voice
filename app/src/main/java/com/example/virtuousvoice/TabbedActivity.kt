@@ -15,12 +15,12 @@ class TabbedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabbed)
 
-        var user = intent.getStringExtra("user")
-        createTabs(user)
+        var usertype = intent.getStringExtra("usertype")
+        createTabs(usertype)
     }
 
-    fun createTabs(user: String?){
-        if (user == "parent"){
+    fun createTabs(usertype: String?){
+        if (usertype == "parent"){
             val adaptor = ViewPagerAdaptor(supportFragmentManager)
             adaptor.addFragment(HomeFragment(), "")
             adaptor.addFragment(ChildernFragment(), "")
@@ -31,7 +31,7 @@ class TabbedActivity : AppCompatActivity() {
             _tabs.getTabAt(1)!!.setIcon(R.drawable.icon_child)
             _tabs.getTabAt(2)!!.setIcon(R.drawable.icon_setting)
         }
-        else if (user == "child"){
+        else if (usertype == "child"){
             val adaptor = ViewPagerAdaptor(supportFragmentManager)
             adaptor.addFragment(HomeFragment(), "")
             adaptor.addFragment(SettingFragment(),"")
@@ -40,7 +40,7 @@ class TabbedActivity : AppCompatActivity() {
             _tabs.getTabAt(0)!!.setIcon(R.drawable.icon_home)
             _tabs.getTabAt(1)!!.setIcon(R.drawable.icon_setting)
         }
-        else if (user == "individual"){
+        else if (usertype == "individual"){
             val adaptor = ViewPagerAdaptor(supportFragmentManager)
             adaptor.addFragment(HomeFragment(), "")
             adaptor.addFragment(SettingFragment(),"")
