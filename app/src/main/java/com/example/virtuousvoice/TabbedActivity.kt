@@ -40,15 +40,6 @@ class TabbedActivity : AppCompatActivity() {
             _tabs.getTabAt(0)!!.setIcon(R.drawable.icon_home)
             _tabs.getTabAt(1)!!.setIcon(R.drawable.icon_setting)
         }
-        else if (usertype == "individual"){
-            val adaptor = ViewPagerAdaptor(supportFragmentManager)
-            adaptor.addFragment(HomeFragment(), "")
-            adaptor.addFragment(SettingFragment(),"")
-            _view_pager.adapter = adaptor
-            _tabs.setupWithViewPager(_view_pager)
-            _tabs.getTabAt(0)!!.setIcon(R.drawable.icon_home)
-            _tabs.getTabAt(1)!!.setIcon(R.drawable.icon_setting)
-        }
         else{
 
         }

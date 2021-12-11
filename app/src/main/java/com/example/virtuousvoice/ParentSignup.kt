@@ -42,16 +42,17 @@ class ParentSignup : AppCompatActivity() {
         //Signing up user
         _btn_sign_up.setOnClickListener{
             val flag = createAccount()
-            if (flag){
-                val intent = Intent(this, TabbedActivity::class.java)
-                intent.putExtra("user", user)
-                startActivity(intent)
-                finish()
-            }
-            else{
-                Toast.makeText(baseContext, "Something went wrong.",
-                    Toast.LENGTH_SHORT).show()
-            }
+            val intent = Intent(this, TabbedActivity::class.java)
+            intent.putExtra("user", user)
+            startActivity(intent)
+//            finish()
+//            if (flag){
+//
+//            }
+//            else{
+//                Toast.makeText(baseContext, "Something went wrong.",
+//                    Toast.LENGTH_SHORT).show()
+//            }
 
         }
 
@@ -67,14 +68,6 @@ class ParentSignup : AppCompatActivity() {
         _sign_in_as_child.setOnClickListener{
             val intent = Intent(this, SignIn::class.java)
             intent.putExtra("usertype","child")
-            startActivity(intent)
-            finish()
-        }
-
-        //Taking user to sign in screen
-        _sign_in_as_individual.setOnClickListener{
-            val intent = Intent(this, SignIn::class.java)
-            intent.putExtra("usertype","individual")
             startActivity(intent)
             finish()
         }

@@ -1,13 +1,8 @@
 package com.example.virtuousvoice
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -47,13 +42,6 @@ class SignIn : AppCompatActivity() {
         //Taking use to sign up as child screen
         _sign_up_as_child.setOnClickListener{
             val intent = Intent(this, ChildSignup::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        //Taking use to sign up as individual screen
-        _sign_up_as_individual.setOnClickListener{
-            val intent = Intent(this, IndividualSignup::class.java)
             startActivity(intent)
             finish()
         }

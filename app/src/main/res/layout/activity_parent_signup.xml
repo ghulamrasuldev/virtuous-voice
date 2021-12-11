@@ -205,15 +205,6 @@
                 android:textColor="@color/white"
                 android:background="@drawable/button_background"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/_sign_in_as_individual"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:text="Individual"
-                android:fontFamily="@font/montserrat"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

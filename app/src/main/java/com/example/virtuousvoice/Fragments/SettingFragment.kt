@@ -62,7 +62,7 @@ class SettingFragment : Fragment() {
         val username = "ghulamrasool.testing@yahoo.com"
         val password = "vtmjjqhvheybeeso"
         val fromEmail = "ghulamrasool.testing@yahoo.com"
-        val toEmail = "samiya.mehr@gmail.com"
+        val toEmail = "adeelnawab@cuilahore.edu.pk"
 
         val properties = Properties()
         properties["mail.smtp.auth"] = "true"

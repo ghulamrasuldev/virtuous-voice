@@ -26,14 +26,6 @@ class WelcomeScreen : AppCompatActivity() {
             finish()
         }
 
-        //Signing in as Individual
-        _sign_in_as_individual.setOnClickListener{
-            val intent = Intent(this, SignIn::class.java)
-            intent.putExtra("usertype","individual")
-            startActivity(intent)
-            finish()
-        }
-
         //Taking use to sign up as parent screen
         _sign_up_as_parent.setOnClickListener{
             val intent = Intent(this, ParentSignup::class.java)
@@ -48,11 +40,5 @@ class WelcomeScreen : AppCompatActivity() {
             finish()
         }
 
-        //Taking use to sign up as Individual screen
-        _sign_up_as_individual.setOnClickListener{
-            val intent = Intent(this, IndividualSignup::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 }
