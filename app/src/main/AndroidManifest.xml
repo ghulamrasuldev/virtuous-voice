@@ -11,19 +11,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtuousVoice">
         <activity
             android:name=".TabbedActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ParentHome"
-            android:exported="true"
-            android:label="@string/title_activity_parent_home"
-            android:theme="@style/Theme.VirtuousVoice.NoActionBar" />
-        <activity
-            android:name=".IndividualSignup"
             android:exported="true" />
         <activity
             android:name=".ChildSignup"

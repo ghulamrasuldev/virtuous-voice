@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_parent_signup.*
 import android.util.Log
-import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
+
 
 class ParentSignup : AppCompatActivity() {
 
@@ -25,13 +25,12 @@ class ParentSignup : AppCompatActivity() {
     private lateinit var etConfirmPassword: String
     private lateinit var etPID: String
     private lateinit var user: String
-
+    private var flag: Boolean = false
     val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_parent_signup)
-
         auth = Firebase.auth
 
         //Generate PID
@@ -41,18 +40,14 @@ class ParentSignup : AppCompatActivity() {
 
         //Signing up user
         _btn_sign_up.setOnClickListener{
-            val flag = createAccount()
-            val intent = Intent(this, TabbedActivity::class.java)
-            intent.putExtra("usertype", "parent")
-            startActivity(intent)
-//            finish()
-//            if (flag){
-//
-//            }
-//            else{
-//                Toast.makeText(baseContext, "Something went wrong.",
-//                    Toast.LENGTH_SHORT).show()
-//            }
+            flag = createAccount()
+            if (flag==true){
+                Toast.makeText(baseContext, "Account Request Sent Successfully",
+                    Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SignIn::class.java)
+                intent.putExtra("usertype", "parent")
+                startActivity(intent)
+            }
 
         }
 
@@ -88,12 +83,12 @@ class ParentSignup : AppCompatActivity() {
             && etPID.isNotEmpty()) {
 
             if (etPassword.isNotEmpty() && etPassword == etConfirmPassword) {
+                flag = true
                 auth.createUserWithEmailAndPassword(etEmail, etPassword).addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            flag = true
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            val user = auth.currentUser
+                            var user = auth.currentUser
                             saveToFirestore(etEmail.trim(), etName.trim(), etUserName.trim(), etNumber.trim(), etPID.trim())
                         } else {
                             flag = false
@@ -103,7 +98,6 @@ class ParentSignup : AppCompatActivity() {
                         }
                     }
             }
-
             else {
                 Log.d(TAG, "createUserWithEmail:Password Doesn't match")
             }
@@ -118,7 +112,13 @@ class ParentSignup : AppCompatActivity() {
     private fun saveToFirestore(email: String, name: String, userName: String, number: String, pid: String) {
 
 
-        val user = hashMapOf("name" to name, "userName" to userName, "number" to number, "email" to email, "pid" to pid, "userType" to 1)
+        val user = hashMapOf(
+            "name" to name,
+            "userName" to userName,
+            "number" to number,
+            "email" to email,
+            "pid" to pid,
+            "userType" to "parent")
 
         db.collection("users").add(user).addOnSuccessListener { documentReference ->
                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
@@ -129,7 +129,9 @@ class ParentSignup : AppCompatActivity() {
 
     fun generatePID(): String{
         var pid: String
+        var randomNumberFlag = true
         pid = Random.nextInt(1000,9999).toString()
         return pid
     }
+
 }

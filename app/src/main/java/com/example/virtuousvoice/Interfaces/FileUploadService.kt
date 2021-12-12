@@ -7,16 +7,13 @@ import retrofit2.http.Part
 import retrofit2.Call
 
 import okhttp3.ResponseBody
+import retrofit2.http.Body
 
 public interface FileUploadService {
 
-    @Multipart
     @POST ("https://virtuous-api.herokuapp.com/")
-    fun upload (
-        @Part("uuid") uuid: String,
-        @Part("alarmType") alarmType: String,
-        @Part("timeDuration") timeDuration:String,
-        @Part("AudioFile") AudioFile: MultipartBody.Part,
+    fun callApi (@Body
+        AudioFile: MultipartBody.Part,
     ) :Call<ResponseBody>
 
 }
