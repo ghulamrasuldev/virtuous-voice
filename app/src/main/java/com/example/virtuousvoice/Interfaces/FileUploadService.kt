@@ -9,6 +9,7 @@ import retrofit2.Call
 import okhttp3.ResponseBody
 
 public interface FileUploadService {
+
     @Multipart
     @POST ("https://virtuous-api.herokuapp.com/")
     fun upload (
@@ -17,4 +18,5 @@ public interface FileUploadService {
         @Part("timeDuration") timeDuration:String,
         @Part("AudioFile") AudioFile: MultipartBody.Part,
     ) :Call<ResponseBody>
+
 }

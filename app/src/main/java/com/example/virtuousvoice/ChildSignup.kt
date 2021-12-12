@@ -53,14 +53,6 @@ class ChildSignup : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        //Taking user to sign in screen
-        _sign_in_as_individual.setOnClickListener{
-            val intent = Intent(this, SignIn::class.java)
-            intent.putExtra("usertype", "individual")
-            startActivity(intent)
-            finish()
-        }
     }
 
     fun createAccount(): Boolean {
