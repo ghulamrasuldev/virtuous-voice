@@ -11,9 +11,9 @@ import retrofit2.http.Body
 
 public interface FileUploadService {
 
-    @POST ("https://virtuous-api.herokuapp.com/")
+    @POST ("https://virtuous-api.herokuapp.com/?transcription=jfhsjfjhsjhfhsfss")
     fun callApi (@Body
-        AudioFile: MultipartBody.Part,
+        transcription: String
     ) :Call<ResponseBody>
 
 }

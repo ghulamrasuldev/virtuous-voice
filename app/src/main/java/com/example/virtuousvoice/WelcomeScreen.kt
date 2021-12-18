@@ -15,7 +15,6 @@ class WelcomeScreen : AppCompatActivity() {
             val intent = Intent(this, SignIn::class.java)
             intent.putExtra("usertype","parent")
             startActivity(intent)
-            finish()
         }
 
         //Signing in as Child
@@ -23,21 +22,18 @@ class WelcomeScreen : AppCompatActivity() {
             val intent = Intent(this, SignIn::class.java)
             intent.putExtra("usertype","child")
             startActivity(intent)
-            finish()
         }
 
         //Taking use to sign up as parent screen
         _sign_up_as_parent.setOnClickListener{
             val intent = Intent(this, ParentSignup::class.java)
             startActivity(intent)
-            finish()
         }
 
         //Taking use to sign up as Child screen
         _sign_up_as_child.setOnClickListener{
             val intent = Intent(this, ChildSignup::class.java)
             startActivity(intent)
-            finish()
         }
 
     }
