@@ -14,18 +14,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import okhttp3.Request
+import org.json.JSONObject
+import java.io.IOException
 import kotlin.random.Random
 
 
 class ParentSignup : AppCompatActivity() {
-
     private lateinit var auth: FirebaseAuth;
     private val TAG = "testTag"
     private lateinit var etUserName: String
     private lateinit var etEmail: String
     private lateinit var etNumber: String
     private lateinit var etPassword: String
-    private lateinit var user: String
     private var flag: Boolean = false
     val db = Firebase.firestore
 
@@ -33,19 +34,9 @@ class ParentSignup : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_parent_signup)
         auth = Firebase.auth
-
         //Signing up user
         _btn_sign_up.setOnClickListener {
-            flag = createAccount()
-            if (flag) {
-                Toast.makeText(
-                    baseContext, "Account Request Sent Successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
-                val intent = Intent(this, SignIn::class.java)
-                intent.putExtra(USER_TYPE, USER_TYPE_PARENT)
-                startActivity(intent)
-            }
+            createAccount()
         }
 
         //Taking user to sign in screen
@@ -80,7 +71,7 @@ class ParentSignup : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
-                        var user = auth.currentUser
+                        Log.d(TAG, "Saving data to FireStore")
                         saveToFirestore(etEmail.trim(), etUserName.trim(), etNumber.trim())
                     } else {
                         flag = false
@@ -97,17 +88,40 @@ class ParentSignup : AppCompatActivity() {
     }
 
     private fun saveToFirestore(email: String, userName: String, number: String) {
-        val user = hashMapOf(
-            "userName" to userName,
-            "number" to number,
-            "email" to email,
-            "userType" to "parent"
-        )
 
-        db.collection(USER_COLLECTION).add(user).addOnSuccessListener { documentReference ->
-            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-        }.addOnFailureListener { e ->
-            Log.w(TAG, "Error adding document", e)
+        val thread = Thread {
+            try {
+                //Your code goes here
+                val user = hashMapOf(
+                    "userType" to "parent",
+                    "eMail" to email,
+                    "userName" to userName,
+                    "phoneNumber" to number
+                )
+
+                db.collection(USER_COLLECTION).add(user).addOnSuccessListener { documentReference ->
+                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+
+                    //Moving to Next Screen
+                    val intent = Intent(this, SignIn::class.java)
+                    intent.putExtra(USER_TYPE, USER_TYPE_PARENT)
+                    startActivity(intent)
+                    finish()
+
+                }.addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
+        thread.start()
+        Log.d("Thread status: ", "Started")
+        thread.interrupt()
+        Log.d("Thread status: ", "Stopped")
+
+
+
     }
 }
