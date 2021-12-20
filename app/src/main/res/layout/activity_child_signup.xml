@@ -50,19 +50,6 @@
                 android:background="@drawable/edit_text_background"/>
 
             <EditText
-                android:id="@+id/_sign_up_name"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:hint="Write a name"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textColorHint="@color/disabled_white"
-                android:textColor="@color/white"
-                android:fontFamily="@font/montserrat"
-                android:background="@drawable/edit_text_background"/>
-
-            <EditText
                 android:id="@+id/_sign_up_username"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -108,22 +95,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <EditText
-                    android:id="@+id/_sign_up_PID"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="60dp"
-                    android:hint="Enter your PID"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:textColorHint="@color/disabled_white"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat"
-                    android:background="@drawable/edit_text_background"/>
-
-            </LinearLayout>
+                android:gravity="center"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/_btn_sign_up"

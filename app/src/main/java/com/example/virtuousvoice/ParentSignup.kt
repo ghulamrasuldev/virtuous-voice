@@ -6,18 +6,23 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_parent_signup.*
 import android.util.Log
 import android.widget.Toast
+import com.example.virtuousvoice.utilties.Common.AUTHENTICATION_FAILED_ERROR
+import com.example.virtuousvoice.utilties.Common.EMPTY_FIELDS_ERROR
+import com.example.virtuousvoice.utilties.Common.INVALID_EMAIL
+import com.example.virtuousvoice.utilties.Common.INVALID_PASSWORD
+import com.example.virtuousvoice.utilties.Common.INVALID_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
 import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT
+import com.example.virtuousvoice.utilties.Common.VERIFY_PASSWORD_ERROR
+import com.example.virtuousvoice.utilties.Common.isEmailValid
+import com.example.virtuousvoice.utilties.Common.isPasswordValid
+import com.example.virtuousvoice.utilties.Common.isPhoneValid
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import okhttp3.Request
-import org.json.JSONObject
-import java.io.IOException
-import kotlin.random.Random
 
 
 class ParentSignup : AppCompatActivity() {
@@ -27,7 +32,7 @@ class ParentSignup : AppCompatActivity() {
     private lateinit var etEmail: String
     private lateinit var etNumber: String
     private lateinit var etPassword: String
-    private var flag: Boolean = false
+    private lateinit var etVerifyPassword: String
     val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,29 +65,54 @@ class ParentSignup : AppCompatActivity() {
         etUserName = _sign_up_username.text.toString()
         etNumber = _sign_up_number.text.toString()
         etPassword = _sign_up_password.text.toString()
+        etVerifyPassword = _sign_up_verify_password.text.toString()
 
         if (etEmail.isNotEmpty() && etUserName.isNotEmpty()
             && etNumber.isNotEmpty() && etPassword.isNotEmpty()
         ) {
-
-            flag = true
-            auth.createUserWithEmailAndPassword(etEmail, etPassword)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
-                        Log.d(TAG, "Saving data to FireStore")
-                        saveToFirestore(etEmail.trim(), etUserName.trim(), etNumber.trim())
-                    } else {
-                        flag = false
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT)
-                            .show()
+            //Validation Rules
+                //Checking Email
+            if (etEmail.isEmailValid()){
+                    //Checking Phone Number
+                if (etNumber.isPhoneValid()){
+                        //Checking Password Strength
+                    if(etPassword.isPasswordValid()){
+                        //Verifying Password
+                        if(etPassword==etVerifyPassword){
+                            auth.createUserWithEmailAndPassword(etEmail, etPassword)
+                                .addOnCompleteListener(this) { task ->
+                                    if (task.isSuccessful) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "createUserWithEmail:success")
+                                        Log.d(TAG, "Saving data to FireStore")
+                                        saveToFirestore(etEmail.trim(), etUserName.trim(), etNumber.trim())
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                        Toast.makeText(baseContext, AUTHENTICATION_FAILED_ERROR + (task.getException()?.message
+                                            ?: ""), Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
+                                }
+                        }
+                        else{
+                            Toast.makeText(this, VERIFY_PASSWORD_ERROR, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    else{
+                        Toast.makeText(this, INVALID_PASSWORD, Toast.LENGTH_SHORT).show()
                     }
                 }
+                else{
+                    Toast.makeText(this, INVALID_PHONE, Toast.LENGTH_SHORT).show()
+                }
+            }
+            else{
+                Toast.makeText(this, INVALID_EMAIL, Toast.LENGTH_SHORT).show()
+            }
+
         } else {
-            Toast.makeText(this, "Some Fields are empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, EMPTY_FIELDS_ERROR, Toast.LENGTH_SHORT).show()
         }
         return flag
     }
@@ -118,10 +148,10 @@ class ParentSignup : AppCompatActivity() {
         }
         thread.start()
         Log.d("Thread status: ", "Started")
-        thread.interrupt()
-        Log.d("Thread status: ", "Stopped")
-
-
-
     }
+
 }
+
+
+
+

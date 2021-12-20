@@ -63,11 +63,9 @@ class ChildSignup : AppCompatActivity() {
     fun createAccount(): Boolean {
         var flag : Boolean = false
         etEmail = _sign_up_email.text.toString()
-        etName = _sign_up_name.text.toString()
         etUserName = _sign_up_username.text.toString()
         etPassword = _sign_up_password.text.toString()
         etConfirmPassword = _sign_up_verify_password.text.toString()
-        etPID = _sign_up_PID.text.toString()
 
         if (etEmail.isNotEmpty() && etName.isNotEmpty() && etUserName.isNotEmpty()
             && etPassword.isNotEmpty() && etConfirmPassword.isNotEmpty() && etPID.isNotEmpty()
@@ -87,8 +85,7 @@ class ChildSignup : AppCompatActivity() {
                             saveToFirestore(
                                 etEmail.trim(),
                                 etName.trim(),
-                                etUserName.trim(),
-                                etPID.trim()
+                                etUserName.trim()
                             )
                         } else {
                             flag = false
@@ -112,14 +109,12 @@ class ChildSignup : AppCompatActivity() {
 
     }
 
-    private fun saveToFirestore(email: String, name: String, userName: String, pid: String) {
+    private fun saveToFirestore(email: String, name: String, userName: String) {
 
 
         val user = hashMapOf(
-            "name" to name,
             "userName" to userName,
             "email" to email,
-            "pid" to pid,
             "userType" to "child"
         )
 

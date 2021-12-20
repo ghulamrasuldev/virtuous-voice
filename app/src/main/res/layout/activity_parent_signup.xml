@@ -90,6 +90,20 @@
                 android:background="@drawable/edit_text_background"/>
 
 
+            <EditText
+                android:id="@+id/_sign_up_verify_password"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_background"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:hint="Enter your password"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/disabled_white"
+                android:textSize="20sp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/_btn_sign_up"
                 android:layout_width="match_parent"
