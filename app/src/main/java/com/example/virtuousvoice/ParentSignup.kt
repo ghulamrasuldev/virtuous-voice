@@ -1,31 +1,37 @@
 package com.example.virtuousvoice
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_parent_signup.*
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.AUTHENTICATION_FAILED_ERROR
+import com.example.virtuousvoice.utilties.Common.DATE
+import com.example.virtuousvoice.utilties.Common.DAY
 import com.example.virtuousvoice.utilties.Common.EMPTY_FIELDS_ERROR
-import com.example.virtuousvoice.utilties.Common.INVALID_EMAIL
-import com.example.virtuousvoice.utilties.Common.INVALID_PASSWORD
-import com.example.virtuousvoice.utilties.Common.INVALID_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
+import com.example.virtuousvoice.utilties.Common.USER_EMAIL
+import com.example.virtuousvoice.utilties.Common.USER_NAME
+import com.example.virtuousvoice.utilties.Common.USER_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT
 import com.example.virtuousvoice.utilties.Common.VERIFY_PASSWORD_ERROR
 import com.example.virtuousvoice.utilties.Common.isEmailValid
 import com.example.virtuousvoice.utilties.Common.isPasswordValid
-import com.example.virtuousvoice.utilties.Common.isPhoneValid
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
+import java.time.LocalDate
+import java.util.*
 
 class ParentSignup : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth;
     private val TAG = "testTag"
     private lateinit var etUserName: String
@@ -35,6 +41,7 @@ class ParentSignup : AppCompatActivity() {
     private lateinit var etVerifyPassword: String
     val db = Firebase.firestore
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_parent_signup)
@@ -49,6 +56,7 @@ class ParentSignup : AppCompatActivity() {
             val intent = Intent(this, SignIn::class.java)
             intent.putExtra(USER_TYPE, USER_TYPE_PARENT)
             startActivity(intent)
+            finish()
         }
 
         //Taking user to sign in screen
@@ -59,8 +67,8 @@ class ParentSignup : AppCompatActivity() {
         }
     }
 
-    private fun createAccount(): Boolean {
-        var flag: Boolean = false
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createAccount(){
         etEmail = _sign_up_email.text.toString()
         etUserName = _sign_up_username.text.toString()
         etNumber = _sign_up_number.text.toString()
@@ -68,73 +76,69 @@ class ParentSignup : AppCompatActivity() {
         etVerifyPassword = _sign_up_verify_password.text.toString()
 
         if (etEmail.isNotEmpty() && etUserName.isNotEmpty()
-            && etNumber.isNotEmpty() && etPassword.isNotEmpty()
-        ) {
+            && etNumber.isNotEmpty() && etPassword.isNotEmpty()) {
             //Validation Rules
-                //Checking Email
-            if (etEmail.isEmailValid()){
-                    //Checking Phone Number
-                if (etNumber.isPhoneValid()){
-                        //Checking Password Strength
-                    if(etPassword.isPasswordValid()){
-                        //Verifying Password
-                        if(etPassword==etVerifyPassword){
-                            auth.createUserWithEmailAndPassword(etEmail, etPassword)
-                                .addOnCompleteListener(this) { task ->
-                                    if (task.isSuccessful) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "createUserWithEmail:success")
-                                        Log.d(TAG, "Saving data to FireStore")
-                                        saveToFirestore(etEmail.trim(), etUserName.trim(), etNumber.trim())
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                        Toast.makeText(baseContext, AUTHENTICATION_FAILED_ERROR + (task.getException()?.message
-                                            ?: ""), Toast.LENGTH_SHORT)
-                                            .show()
-                                    }
+            //Checking Email
+            if (etEmail.isEmailValid(this)) {
+                //Checking Password Strength
+                if (etPassword.isPasswordValid(this)) {
+                    //Verifying Password
+                    if (etPassword == etVerifyPassword) {
+                        auth.createUserWithEmailAndPassword(etEmail, etPassword)
+                            .addOnCompleteListener(this) { task ->
+                                if (task.isSuccessful) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "createUserWithEmail:success")
+                                    Log.d(TAG, "Saving data to FireStore")
+                                    saveToFirestore(
+                                        etEmail.trim(),
+                                        etUserName.trim(),
+                                        etNumber.trim()
+                                    )
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                    Toast.makeText(
+                                        baseContext,
+                                        AUTHENTICATION_FAILED_ERROR + (task.getException()?.message
+                                            ?: ""),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
-                        }
-                        else{
-                            Toast.makeText(this, VERIFY_PASSWORD_ERROR, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    else{
-                        Toast.makeText(this, INVALID_PASSWORD, Toast.LENGTH_SHORT).show()
+                            }
+                    } else {
+                        Toast.makeText(this, VERIFY_PASSWORD_ERROR, Toast.LENGTH_SHORT).show()
                     }
                 }
-                else{
-                    Toast.makeText(this, INVALID_PHONE, Toast.LENGTH_SHORT).show()
-                }
-            }
-            else{
-                Toast.makeText(this, INVALID_EMAIL, Toast.LENGTH_SHORT).show()
             }
 
         } else {
             Toast.makeText(this, EMPTY_FIELDS_ERROR, Toast.LENGTH_SHORT).show()
         }
-        return flag
     }
 
-    private fun saveToFirestore(email: String, userName: String, number: String) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun saveToFirestore(userEmail: String, userName: String, userPhone: String) {
 
         val thread = Thread {
             try {
                 //Your code goes here
                 val user = hashMapOf(
-                    "userType" to "parent",
-                    "eMail" to email,
-                    "userName" to userName,
-                    "phoneNumber" to number
+                    USER_TYPE to USER_TYPE_PARENT,
+                    USER_EMAIL to userEmail,
+                    USER_NAME to userName,
+                    USER_PHONE to userPhone,
+                    DATE to LocalDate.now().toString(),
+                    DAY to LocalDate.now().dayOfWeek.toString()
                 )
-
                 db.collection(USER_COLLECTION).add(user).addOnSuccessListener { documentReference ->
                     Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-
                     //Moving to Next Screen
-                    val intent = Intent(this, SignIn::class.java)
+                    val intent = Intent(this, TabbedActivity::class.java)
                     intent.putExtra(USER_TYPE, USER_TYPE_PARENT)
+                    intent.putExtra(USER_NAME, userName)
+                    intent.putExtra(USER_EMAIL,userEmail)
+                    intent.putExtra(USER_PHONE,userPhone)
                     startActivity(intent)
                     finish()
 

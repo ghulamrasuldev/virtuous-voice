@@ -6,20 +6,25 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
+import com.example.virtuousvoice.utilties.Common.USER_EMAIL
+import com.example.virtuousvoice.utilties.Common.USER_NAME
+import com.example.virtuousvoice.utilties.Common.USER_PHONE
+import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignIn : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
+    private var auth: FirebaseAuth = Firebase.auth
     private lateinit var usertype: String
-
+    val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        val usertype = intent.getStringExtra("usertype")
-        auth = Firebase.auth
+        usertype = intent.getStringExtra(USER_TYPE).toString()
         var etEmail: String
         var etPassword: String
         _sign_in_as.setText("signing in as " + usertype)
@@ -47,24 +52,37 @@ class SignIn : AppCompatActivity() {
         }
     }
 
-    fun AuthenticateUser(email: String, password: String){
+    private fun AuthenticateUser(email: String, password: String){
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
-                    val user = auth.currentUser
-                    val intent = Intent(this, TabbedActivity::class.java)
-                    intent.putExtra("usertype","parent")
-                    startActivity(intent)
-                    finish()
+                    db.collection(USER_COLLECTION)
+                        .whereEqualTo(USER_EMAIL,email)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents){
+                                val intent = Intent(this, TabbedActivity::class.java)
+                                intent.putExtra(USER_TYPE, usertype)
+                                intent.putExtra(USER_EMAIL, document.data[USER_EMAIL].toString())
+                                intent.putExtra(USER_NAME, document.data[USER_NAME].toString())
+                                intent.putExtra(USER_PHONE, document.data[USER_PHONE].toString())
+                                startActivity(intent)
+                                finish()
+                            }
+                        }
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.makeText(baseContext, "Authentication failed." + (task.getException()?.message
+                        ?: ""),
                         Toast.LENGTH_SHORT).show()
                 }
             }
     }
 }
+
+
 

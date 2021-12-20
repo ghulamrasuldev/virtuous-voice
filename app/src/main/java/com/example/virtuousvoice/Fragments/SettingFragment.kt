@@ -12,7 +12,11 @@ import kotlinx.android.synthetic.main.fragment_setting.*
 import com.example.virtuousvoice.RecordAudio
 
 
-class SettingFragment : Fragment() {
+class SettingFragment (userType: String, userName: String, userEmail: String, userPhone: String): Fragment() {
+    private var userType: String = userType
+    private var userName: String = userName
+    private var userEmail: String = userEmail
+    private var userPhone: String = userPhone
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

@@ -14,7 +14,11 @@ import com.example.virtuousvoice.R
 import com.example.virtuousvoice.TabbedActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment() {
+class HomeFragment (userType: String, userName: String, userEmail: String, userPhone: String): Fragment() {
+    private var userType: String = userType
+    private var userName: String = userName
+    private var userEmail: String = userEmail
+    private var userPhone: String = userPhone
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -28,6 +32,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _user_name.text = "Hi $userName!"
         val AudioList = dummyData()
         val CapturedAudioView = _captured_voice_notes
         CapturedAudioView.adapter = CapturedAudiosAdaptor(AudioList)
@@ -36,17 +41,17 @@ class HomeFragment : Fragment() {
     private fun dummyData (): List<CapturedVoiceData>{
         val list = ArrayList<CapturedVoiceData>()
         list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
+        list.add(CapturedVoiceData("samiya ijaz","03/02/21", "Tuesday"))
+        list.add(CapturedVoiceData("noman khalid","03/02/21", "Tuesday"))
         list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
+        list.add(CapturedVoiceData("samiya ijaz","03/02/21", "Tuesday"))
+        list.add(CapturedVoiceData("noman khalid","03/02/21", "Tuesday"))
         list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
+        list.add(CapturedVoiceData("samiya ijaz","03/02/21", "Tuesday"))
+        list.add(CapturedVoiceData("noman khalid","03/02/21", "Tuesday"))
         list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
-        list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
-        list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
-        list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
-        list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
-        list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
-        list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
-        list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
-        list.add(CapturedVoiceData("ghulamrasool","03/02/21", "Tuesday"))
+        list.add(CapturedVoiceData("samiya ijaz","03/02/21", "Tuesday"))
+        list.add(CapturedVoiceData("noman khalid","03/02/21", "Tuesday"))
         return list
     }
 }
