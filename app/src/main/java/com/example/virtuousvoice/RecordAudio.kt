@@ -9,6 +9,7 @@ import android.os.StrictMode
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.virtuousvoice.utilties.Common.CHILD_NAME
@@ -88,6 +89,7 @@ class RecordAudio : AppCompatActivity() {
                         prediction=true
                         Log.d("prediction: ", "$prediction")
                     }
+
                     if(prediction){
                         sendEmail(parentEmail, childName, transcription)
                     }

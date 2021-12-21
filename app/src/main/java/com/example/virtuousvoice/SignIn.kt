@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
@@ -53,6 +54,8 @@ class SignIn : AppCompatActivity() {
     }
 
     private fun AuthenticateUser(email: String, password: String){
+        _progressBar.visibility= View.VISIBLE
+        _progressBar.visibility= View.INVISIBLE
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -74,6 +77,7 @@ class SignIn : AppCompatActivity() {
                         }
 
                 } else {
+                    _progressBar.visibility= View.INVISIBLE
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed." + (task.getException()?.message

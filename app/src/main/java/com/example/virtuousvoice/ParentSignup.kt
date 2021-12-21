@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_parent_signup.*
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.virtuousvoice.utilties.Common
@@ -13,6 +14,7 @@ import com.example.virtuousvoice.utilties.Common.AUTHENTICATION_FAILED_ERROR
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
 import com.example.virtuousvoice.utilties.Common.EMPTY_FIELDS_ERROR
+import com.example.virtuousvoice.utilties.Common.USER_ALREADY_REGISTERED
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
@@ -74,7 +76,7 @@ class ParentSignup : AppCompatActivity() {
         etNumber = _sign_up_number.text.toString()
         etPassword = _sign_up_password.text.toString()
         etVerifyPassword = _sign_up_verify_password.text.toString()
-
+        _progressBar.visibility = View.VISIBLE
         if (etEmail.isNotEmpty() && etUserName.isNotEmpty()
             && etNumber.isNotEmpty() && etPassword.isNotEmpty()) {
             //Validation Rules
@@ -83,39 +85,62 @@ class ParentSignup : AppCompatActivity() {
                 //Checking Password Strength
                 if (etPassword.isPasswordValid(this)) {
                     //Verifying Password
-                    if (etPassword == etVerifyPassword) {
-                        auth.createUserWithEmailAndPassword(etEmail, etPassword)
-                            .addOnCompleteListener(this) { task ->
-                                if (task.isSuccessful) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "createUserWithEmail:success")
-                                    Log.d(TAG, "Saving data to FireStore")
-                                    saveToFirestore(
-                                        etEmail.trim(),
-                                        etUserName.trim(),
-                                        etNumber.trim()
-                                    )
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                    Toast.makeText(
-                                        baseContext,
-                                        AUTHENTICATION_FAILED_ERROR + (task.getException()?.message
-                                            ?: ""),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                    db.collection(USER_COLLECTION)
+                        .whereEqualTo(USER_PHONE, etNumber)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            var parenAlreadyRegisetered = false
+                            for (document in documents){
+                                if (document.data[USER_PHONE].toString() == etNumber){
+                                    parenAlreadyRegisetered = true
                                 }
                             }
-                    } else {
-                        Toast.makeText(this, VERIFY_PASSWORD_ERROR, Toast.LENGTH_SHORT).show()
-                    }
+                            if(!parenAlreadyRegisetered){
+                                if (etPassword == etVerifyPassword) {
+                                    auth.createUserWithEmailAndPassword(etEmail, etPassword)
+                                        .addOnCompleteListener(this) { task ->
+                                            if (task.isSuccessful) {
+                                                // Sign in success, update UI with the signed-in user's information
+                                                Log.d(TAG, "createUserWithEmail:success")
+                                                Log.d(TAG, "Saving data to FireStore")
+                                                saveToFirestore(
+                                                    etEmail.trim(),
+                                                    etUserName.trim(),
+                                                    etNumber.trim()
+                                                )
+                                            } else {
+                                                _progressBar.visibility = View.INVISIBLE
+                                                // If sign in fails, display a message to the user.
+                                                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                                                Toast.makeText(
+                                                    baseContext,
+                                                    AUTHENTICATION_FAILED_ERROR + (task.getException()?.message
+                                                        ?: ""),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                } else {
+                                    _progressBar.visibility = View.INVISIBLE
+                                    Toast.makeText(this, VERIFY_PASSWORD_ERROR, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            else{
+                                _progressBar.visibility = View.INVISIBLE
+                                Toast.makeText(this, USER_ALREADY_REGISTERED, Toast.LENGTH_SHORT).show()
+                            }
+                        }
                 }
             }
 
         } else {
+            _progressBar.visibility = View.INVISIBLE
             Toast.makeText(this, EMPTY_FIELDS_ERROR, Toast.LENGTH_SHORT).show()
         }
     }
+
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveToFirestore(userEmail: String, userName: String, userPhone: String) {
@@ -143,10 +168,12 @@ class ParentSignup : AppCompatActivity() {
                     finish()
 
                 }.addOnFailureListener { e ->
+                    _progressBar.visibility = View.INVISIBLE
                     Log.w(TAG, "Error adding document", e)
                 }
 
             } catch (e: Exception) {
+                _progressBar.visibility = View.INVISIBLE
                 e.printStackTrace()
             }
         }

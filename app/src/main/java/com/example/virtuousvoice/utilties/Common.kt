@@ -23,6 +23,7 @@ object Common {
     const val DATE ="date"
     const val DAY = "day"
     const val USER_COLLECTION = "users"
+    const val USER_ALREADY_REGISTERED = "A user with this phone number is already registered"
     const val INVALID_EMAIL = "The Email provided is invalid!"
     const val INVALID_PHONE = "The Phone Number provided is invalid!"
     const val INVALID_PASSWORD = "The password is too weak\nThe Password must be 8-24 characters " +

@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.virtuousvoice.utilties.Common
@@ -79,6 +80,7 @@ class ChildSignup : AppCompatActivity() {
         etNumber = _sign_up_phone.text.toString()
         etVerifyPassword = _sign_up_verify_password.text.toString()
 
+        _progressBar.visibility = View.VISIBLE
         if (etEmail.isNotEmpty() && etUserName.isNotEmpty() && etUserName.isNotEmpty()
             && etPassword.isNotEmpty() && etVerifyPassword.isNotEmpty()) {
             //Validation Rules
@@ -116,6 +118,7 @@ class ChildSignup : AppCompatActivity() {
                                                         etNumber.trim()
                                                     )
                                                 } else {
+                                                    _progressBar.visibility = View.INVISIBLE
                                                     // If sign in fails, display a message to the user.
                                                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                                                     Toast.makeText(
@@ -127,17 +130,20 @@ class ChildSignup : AppCompatActivity() {
                                                 }
                                             }
                                     } else {
+                                        _progressBar.visibility = View.INVISIBLE
                                         Toast.makeText(this, VERIFY_PASSWORD_ERROR, Toast.LENGTH_SHORT)
                                             .show()
                                     }
                                 }
                             }
                             if (!parentFoundFlag){
+                                _progressBar.visibility = View.INVISIBLE
                                 Toast.makeText(this, NO_PARENT_FOUND_ERROR, Toast.LENGTH_SHORT)
                                     .show()
                             }
                         }
                         .addOnFailureListener { exception ->
+                            _progressBar.visibility = View.INVISIBLE
                             Log.w("Test", "Error getting documents: ", exception)
                         }
                 }
