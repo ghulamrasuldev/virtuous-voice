@@ -25,6 +25,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_childern.*
 import kotlinx.android.synthetic.main.fragment_childern._user_name
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.linked_child_card.*
 
 
 class ChildernFragment (userType: String, userName: String, userEmail: String, userPhone: String): Fragment() {
@@ -42,6 +43,7 @@ class ChildernFragment (userType: String, userName: String, userEmail: String, u
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _user_name.text = "Hi $userName!"
+
         db.collection(USER_COLLECTION)
             .whereEqualTo(USER_PHONE, userPhone)
             .get()
@@ -57,6 +59,9 @@ class ChildernFragment (userType: String, userName: String, userEmail: String, u
                     }
                 }
                 val ChildList = dummyData(nameArray, dateArray, dayArray)
+                if(ChildList.isEmpty()){
+                    _notice.visibility = View.VISIBLE
+                }
                 val LinkedChildView= _linked_childern
                 LinkedChildView.adapter = LinkedChildAdaptor(ChildList)
                 LinkedChildView.layoutManager =  LinearLayoutManager(activity)

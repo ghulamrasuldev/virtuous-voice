@@ -91,8 +91,10 @@ class ChildSignup : AppCompatActivity() {
                         .whereEqualTo(USER_PHONE, etNumber)
                         .get()
                         .addOnSuccessListener { documents ->
+                            var parentFoundFlag = false
                             for (document in documents) {
                                 if(document.data[USER_TYPE].toString() == USER_TYPE_PARENT){
+                                    parentFoundFlag=true
                                     Log.d("Test", "${document.id} => ${document.data[USER_TYPE]}")
                                     Log.d("Test", "${document.id} => ${document.data[USER_NAME]}")
                                     Log.d("Test", "${document.id} => ${document.data[USER_EMAIL]}")
@@ -129,10 +131,10 @@ class ChildSignup : AppCompatActivity() {
                                             .show()
                                     }
                                 }
-                                else{
-                                    Toast.makeText(this, NO_PARENT_FOUND_ERROR, Toast.LENGTH_SHORT)
-                                        .show()
-                                }
+                            }
+                            if (!parentFoundFlag){
+                                Toast.makeText(this, NO_PARENT_FOUND_ERROR, Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                         .addOnFailureListener { exception ->

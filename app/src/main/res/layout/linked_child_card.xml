@@ -75,6 +75,7 @@
                 android:fontFamily="@font/montserrat"
                 android:textStyle="bold"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:background="@drawable/square_button_background"/>
 
 

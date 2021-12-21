@@ -18,6 +18,8 @@ object Common {
     const val USER_NAME= "userName"
     const val USER_EMAIL = "eMail"
     const val USER_PHONE="phoneNumber"
+    const val PARENT_EMAIL = "parentEmail"
+    const val CHILD_NAME ="childName"
     const val DATE ="date"
     const val DAY = "day"
     const val USER_COLLECTION = "users"

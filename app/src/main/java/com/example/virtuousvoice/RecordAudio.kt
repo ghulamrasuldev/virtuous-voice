@@ -11,6 +11,8 @@ import android.speech.SpeechRecognizer
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.virtuousvoice.utilties.Common.CHILD_NAME
+import com.example.virtuousvoice.utilties.Common.PARENT_EMAIL
 import kotlinx.android.synthetic.main.activity_record_audio.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -28,11 +30,16 @@ class RecordAudio : AppCompatActivity() {
     val RecordAudioRequestCode: Int = 102
     private lateinit var speechRecognizer: SpeechRecognizer
     private val client = OkHttpClient()
+    private lateinit var parentEmail: String
+    private lateinit var childName: String
+
 
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record_audio)
+        parentEmail = intent.getStringExtra(PARENT_EMAIL).toString()
+        childName = intent.getStringExtra(CHILD_NAME).toString()
         _button_mic.setOnClickListener{
             askSpeechInput()
         }
@@ -82,7 +89,7 @@ class RecordAudio : AppCompatActivity() {
                         Log.d("prediction: ", "$prediction")
                     }
                     if(prediction){
-                        sendEmail("ghulam.rasool.uni@gmail.com", "GAMA", transcription)
+                        sendEmail(parentEmail, childName, transcription)
                     }
                 }
             } catch (e: Exception) {
