@@ -51,6 +51,7 @@ class ParentSignup : AppCompatActivity() {
         //Signing up user
         _btn_sign_up.setOnClickListener {
             createAccount()
+
         }
 
         //Taking user to sign in screen
