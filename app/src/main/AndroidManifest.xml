@@ -3,27 +3,25 @@
     package="com.example.virtuousvoice">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtuousVoice">
         <activity
-            android:name=".TabbedActivity"
+            android:name=".RecordAudio"
             android:exported="true" />
         <activity
-            android:name=".ParentHome"
-            android:exported="true"
-            android:label="@string/title_activity_parent_home"
-            android:theme="@style/Theme.VirtuousVoice.NoActionBar" />
-        <activity
-            android:name=".IndividualSignup"
+            android:name=".TabbedActivity"
             android:exported="true" />
         <activity
             android:name=".ChildSignup"

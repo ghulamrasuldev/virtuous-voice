@@ -3,14 +3,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ChildernFragment">
+    tools:context=".Fragments.HomeFragment"
+    android:background="@color/primary_color">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Child Fragment"
-        android:textColor="@color/white"
-        android:gravity="center"/>
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hi there!"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
+            android:textSize="22sp"
+            android:paddingBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:background="@drawable/toxic_data_background">
+
+            <TextView
+                android:id="@+id/_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Linked Child(s)!"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textSize="16sp"
+                android:paddingBottom="16dp"
+                android:visibility="gone"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/_linked_childern"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/linked_child_card" />
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

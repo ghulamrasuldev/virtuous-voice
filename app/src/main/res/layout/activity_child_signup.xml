@@ -8,11 +8,20 @@
     android:padding="16dp"
     tools:context=".ParentSignup">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/_progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +40,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create account as parent"
+                android:text="Create account as child"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
                 android:textSize="24dp"/>
@@ -63,6 +72,19 @@
                 android:background="@drawable/edit_text_background"/>
 
             <EditText
+                android:id="@+id/_sign_up_phone"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_background"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:hint="Parent Whatsapp Number"
+                android:textColor="@color/white"
+                android:textColorHint="@color/disabled_white"
+                android:textSize="20sp" />
+
+            <EditText
                 android:id="@+id/_sign_up_password"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -70,6 +92,7 @@
                 android:hint="Enter your password"
                 android:textSize="20sp"
                 android:gravity="center"
+                android:inputType="textPassword"
                 android:textColorHint="@color/disabled_white"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
@@ -83,6 +106,7 @@
                 android:hint="Verify your password"
                 android:textSize="20sp"
                 android:gravity="center"
+                android:inputType="textPassword"
                 android:textColorHint="@color/disabled_white"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
@@ -93,22 +117,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <EditText
-                    android:id="@+id/_sign_up_PID"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="60dp"
-                    android:hint="Enter your PID"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:textColorHint="@color/disabled_white"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/montserrat"
-                    android:background="@drawable/edit_text_background"/>
-
-            </LinearLayout>
+                android:gravity="center"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/_btn_sign_up"
@@ -161,16 +170,6 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:text="Child"
-                android:fontFamily="@font/montserrat"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/_sign_in_as_individual"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:text="Individual"
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/white"
                 android:background="@drawable/button_background"/>
