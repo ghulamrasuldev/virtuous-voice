@@ -22,9 +22,15 @@ class SignIn : AppCompatActivity() {
     private var auth: FirebaseAuth = Firebase.auth
     private lateinit var usertype: String
     val db = Firebase.firestore
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+
         usertype = intent.getStringExtra(USER_TYPE).toString()
         var etEmail: String
         var etPassword: String
@@ -51,6 +57,8 @@ class SignIn : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+
     }
 
     private fun AuthenticateUser(email: String, password: String){
