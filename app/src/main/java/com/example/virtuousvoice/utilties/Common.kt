@@ -12,6 +12,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 object Common {
+    const val APP_NAME: String = "virtuous-voice"
     const val USER_TYPE: String = "userType"
     const val USER_TYPE_PARENT: String = "parent"
     const val USER_TYPE_CHILD: String = "child"
