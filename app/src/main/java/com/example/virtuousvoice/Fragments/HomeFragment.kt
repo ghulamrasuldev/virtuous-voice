@@ -1,24 +1,27 @@
 package com.example.virtuousvoice.Fragments
 
-import android.graphics.Paint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.virtuousvoice.Adaptors.CapturedAudiosAdaptor
 import com.example.virtuousvoice.DataClasses.CapturedVoiceData
 import com.example.virtuousvoice.R
-import com.example.virtuousvoice.TabbedActivity
+import com.example.virtuousvoice.utilties.Common
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment (userType: String, userName: String, userEmail: String, userPhone: String): Fragment() {
-    private var userType: String = userType
-    private var userName: String = userName
-    private var userEmail: String = userEmail
-    private var userPhone: String = userPhone
+class HomeFragment: Fragment() {
+
+    private lateinit var userType: String
+    private lateinit var userName: String
+    private lateinit var userEmail: String
+    private lateinit var userPhone: String
+
+    init {
+        getData()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -53,5 +56,12 @@ class HomeFragment (userType: String, userName: String, userEmail: String, userP
         list.add(CapturedVoiceData("samiya ijaz","03/02/21", "Tuesday"))
         list.add(CapturedVoiceData("noman khalid","03/02/21", "Tuesday"))
         return list
+    }
+
+    private fun getData() {
+        userType = Common.userType
+        userEmail = Common.userEmail
+        userName = Common.userName
+        userPhone = Common.userPhone
     }
 }

@@ -18,22 +18,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtuousVoice">
         <activity
-            android:name=".RecordAudio"
+            android:name=".Views.RecordAudio"
             android:exported="true" />
         <activity
-            android:name=".TabbedActivity"
+            android:name=".Views.TabbedActivity"
             android:exported="true" />
         <activity
-            android:name=".ChildSignup"
+            android:name=".Views.ChildSignup"
             android:exported="true" />
         <activity
-            android:name=".ParentSignup"
+            android:name=".Views.ParentSignup"
             android:exported="true" />
         <activity
-            android:name=".SignIn"
+            android:name=".Views.SignIn"
             android:exported="true" />
         <activity
-            android:name=".WelcomeScreen"
+            android:name=".Views.WelcomeScreen"
             android:exported="true" />
         <activity
             android:name=".DeviceAdminPolicy"
@@ -42,7 +42,7 @@
             android:name=".CreatePin"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

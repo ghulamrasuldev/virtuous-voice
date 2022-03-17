@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "530776840078",
+    "project_id": "virtuousvoice-7efd1",
+    "storage_bucket": "virtuousvoice-7efd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530776840078:android:e35b05b9807faac070b6df",
+        "android_client_info": {
+          "package_name": "com.example.virtuousvoice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530776840078-rauf7osk3pchnsblube65k86fjsksjca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLGUgubKt3Q2BFA3ZR6HWg-5yoQ1dzqNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530776840078-rauf7osk3pchnsblube65k86fjsksjca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

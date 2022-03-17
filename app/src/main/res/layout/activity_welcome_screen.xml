@@ -8,7 +8,7 @@
     android:background="@color/primary_color"
     android:gravity="center"
     android:padding="16dp"
-    tools:context=".WelcomeScreen">
+    tools:context=".Views.WelcomeScreen">
 
     <TextView
         android:layout_width="wrap_content"

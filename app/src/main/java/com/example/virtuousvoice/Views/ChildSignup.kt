@@ -1,6 +1,5 @@
-package com.example.virtuousvoice
+package com.example.virtuousvoice.Views
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +8,13 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
+import com.example.virtuousvoice.R
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.AUTHENTICATION_FAILED_ERROR
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
+import com.example.virtuousvoice.utilties.Common.INVALID_EMAIL
 import com.example.virtuousvoice.utilties.Common.NO_PARENT_FOUND_ERROR
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
@@ -29,9 +31,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_child_signup.*
-import java.text.DateFormat
 import java.time.LocalDate
-import java.util.*
 
 class ChildSignup : AppCompatActivity() {
 
@@ -44,48 +44,46 @@ class ChildSignup : AppCompatActivity() {
     private lateinit var etPassword: String
     private lateinit var etVerifyPassword: String
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_child_signup)
         auth = Firebase.auth
-        //Signing up user
+
+        //Linking Parent Email
         _btn_sign_up.setOnClickListener {
-            createAccount()
+            _child_signup_verify_layout.isVisible = true
+            verifyParentEmail()
         }
 
-        //Taking user to sign in screen
-        _sign_in_as_parent.setOnClickListener {
-            val intent = Intent(this, SignIn::class.java)
-            intent.putExtra(USER_TYPE, USER_TYPE_PARENT)
-            startActivity(intent)
-            finish()
+        //Verifying Email
+        _btn_sign_up_verify.setOnClickListener{
+            linkChild()
         }
+    }
 
-        //Taking user to sign in screen
-        _sign_in_as_child.setOnClickListener {
-            val intent = Intent(this, SignIn::class.java)
-            intent.putExtra(USER_TYPE, USER_TYPE_CHILD)
-            startActivity(intent)
-            finish()
-        }
+    private fun verifyParentEmail() {
+
+    }
+
+    private fun linkChild() {
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun createAccount(){
         etEmail = _sign_up_email.text.toString()
-        etUserName = _sign_up_username.text.toString()
-        etPassword = _sign_up_password.text.toString()
-        etNumber = _sign_up_phone.text.toString()
-        etVerifyPassword = _sign_up_verify_password.text.toString()
+        etUserName = "_sign_up_username.text.toString()"
+        etPassword = "_sign_up_password.text.toString()"
+        etNumber = "_sign_up_phone.text.toString()"
+        etVerifyPassword = "_sign_up_verify_password.text.toString()"
 
         _progressBar.visibility = View.VISIBLE
         if (etEmail.isNotEmpty() && etUserName.isNotEmpty() && etUserName.isNotEmpty()
             && etPassword.isNotEmpty() && etVerifyPassword.isNotEmpty()) {
             //Validation Rules
             // Checking Email
-            if (etEmail.isEmailValid(this)) {
+            if (isEmailValid(etEmail)) {
                 //Checking Password Strength
                 if (etPassword.isPasswordValid(this)) {
                     //Checking if parent exist
@@ -147,6 +145,9 @@ class ChildSignup : AppCompatActivity() {
                             Log.w("Test", "Error getting documents: ", exception)
                         }
                 }
+            }
+            else{
+                Toast.makeText(this, INVALID_EMAIL, Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(this, Common.EMPTY_FIELDS_ERROR, Toast.LENGTH_SHORT).show()

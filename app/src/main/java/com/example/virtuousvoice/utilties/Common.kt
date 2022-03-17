@@ -19,6 +19,7 @@ object Common {
     const val USER_NAME= "userName"
     const val USER_EMAIL = "eMail"
     const val USER_PHONE="phoneNumber"
+    const val DEVICE_TOKEN = "deviceToken"
     const val PARENT_EMAIL = "parentEmail"
     const val CHILD_NAME ="childName"
     const val DATE ="date"
@@ -35,19 +36,13 @@ object Common {
     const val AUTHENTICATION_FAILED_ERROR = "Authentication failed."
     const val PASSWORD_PATTERN = "[a-zA-Z0-9]{8,24}"
     const val NO_PARENT_FOUND_ERROR = "No Parent linked with this phone number"
+    const val PHONE_REGX = "^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}\$|^\\d{11}\$|^\\d{4}-\\d{7}\$"
     private lateinit var auth: FirebaseAuth;
+    var userType: String = USER_TYPE_PARENT
+    var userEmail: String = ""
+    var userName: String = ""
+    var userPhone: String = ""
     val db = Firebase.firestore
-
-    //Email Validation
-    fun String.isEmailValid(context : Context): Boolean {
-        if (!TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()){
-            return true
-        }
-        else{
-            Toast.makeText(context, INVALID_EMAIL, Toast.LENGTH_SHORT).show()
-            return false
-        }
-    }
 
     //Password Length
     fun String.isPasswordValid(context : Context): Boolean {
@@ -59,5 +54,13 @@ object Common {
             Toast.makeText(context, INVALID_PASSWORD, Toast.LENGTH_SHORT).show()
             false
         }
+    }
+
+    fun isEmailValid(email: String): Boolean{
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    fun isValidPhone(phone: String): Boolean{
+        return Pattern.compile(PHONE_REGX).matcher(phone).matches()
     }
 }

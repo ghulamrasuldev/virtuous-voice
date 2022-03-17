@@ -15,7 +15,7 @@
         <entry key="app/src/main/res/drawable/ripple_effect.xml" value="0.17037037037037037" />
         <entry key="app/src/main/res/drawable/square_button_background.xml" value="0.31145833333333334" />
         <entry key="app/src/main/res/drawable/toxic_data_background.xml" value="0.321025641025641" />
-        <entry key="app/src/main/res/layout/activity_child_signup.xml" value="0.2601851851851852" />
+        <entry key="app/src/main/res/layout/activity_child_signup.xml" value="0.29743589743589743" />
         <entry key="app/src/main/res/layout/activity_create_pin.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_device_admin_policy.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_individual_signup.xml" value="0.3098958333333333" />
@@ -24,11 +24,11 @@
         <entry key="app/src/main/res/layout/activity_parent_signup.xml" value="0.27314814814814814" />
         <entry key="app/src/main/res/layout/activity_record_audio.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/activity_tabbed.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_tabbed.xml" value="0.20007875234773165" />
         <entry key="app/src/main/res/layout/activity_welcome_screen.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/captured_voice_card.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_childern.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28970331588132636" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.32987551867219916" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/linked_child.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/linked_child_card.xml" value="0.526543543882984" />

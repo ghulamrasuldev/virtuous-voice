@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_color"
     android:padding="16dp"
-    tools:context=".ParentSignup">
+    tools:context=".Views.ParentSignup">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:hint="Enter your email"
+                android:hint="Your email"
                 android:textSize="20sp"
                 android:gravity="center"
                 android:textColorHint="@color/disabled_white"
@@ -65,7 +65,7 @@
                 android:background="@drawable/edit_text_background"
                 android:fontFamily="@font/montserrat"
                 android:gravity="center"
-                android:hint="Write a username"
+                android:hint="Your name"
                 android:textColor="@color/white"
                 android:textColorHint="@color/disabled_white"
                 android:textSize="20sp" />
@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:hint="Whatsapp Number"
+                android:hint="Contact number"
                 android:textSize="20sp"
                 android:gravity="center"
                 android:textColorHint="@color/disabled_white"
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:hint="Enter your password"
+                android:hint="Your password"
                 android:textSize="20sp"
                 android:gravity="center"
                 android:inputType="textPassword"
@@ -106,7 +106,7 @@
                 android:background="@drawable/edit_text_background"
                 android:fontFamily="@font/montserrat"
                 android:gravity="center"
-                android:hint="Enter your password"
+                android:hint="Verify password"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
                 android:textColorHint="@color/disabled_white"
@@ -124,6 +124,7 @@
                 android:background="@drawable/button_background"/>
 
             <TextView
+                android:id="@+id/_btn_parent_signup_signin_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Already have account?"
@@ -131,43 +132,9 @@
                 android:layout_gravity="end"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
+                android:clickable="true"
                 android:textSize="18dp"/>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign in as"
-                android:textColor="@color/white"
-                android:fontFamily="@font/montserrat"
-                android:textSize="24dp"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/_sign_in_as_parent"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:text="Parent"
-                android:fontFamily="@font/montserrat"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/_sign_in_as_child"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:text="Child"
-                android:fontFamily="@font/montserrat"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"/>
-
-        </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

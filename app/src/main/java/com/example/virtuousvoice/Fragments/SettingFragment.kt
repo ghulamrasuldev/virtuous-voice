@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.virtuousvoice.R
 import kotlinx.android.synthetic.main.fragment_setting.*
-import com.example.virtuousvoice.RecordAudio
+import com.example.virtuousvoice.Views.RecordAudio
 import com.example.virtuousvoice.utilties.Common.CHILD_NAME
 import com.example.virtuousvoice.utilties.Common.PARENT_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION

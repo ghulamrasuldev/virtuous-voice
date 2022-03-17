@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/primary_color"
-    tools:context=".TabbedActivity">
+    tools:context=".Views.TabbedActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +28,8 @@
             app:tabInlineLabel="true"
             app:tabMode="fixed"
             app:tabTextColor="@color/white"
-            app:tabBackground="@color/primary_color" />
+            android:elevation="4dp"
+            app:tabBackground="@color/secondary_color" />
     </com.google.android.material.appbar.AppBarLayout>
 
 

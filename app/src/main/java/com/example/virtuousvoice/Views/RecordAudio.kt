@@ -1,4 +1,4 @@
-package com.example.virtuousvoice
+package com.example.virtuousvoice.Views
 
 import android.app.Activity
 import android.content.Intent
@@ -9,9 +9,9 @@ import android.os.StrictMode
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.virtuousvoice.R
 import com.example.virtuousvoice.utilties.Common.CHILD_NAME
 import com.example.virtuousvoice.utilties.Common.PARENT_EMAIL
 import kotlinx.android.synthetic.main.activity_record_audio.*

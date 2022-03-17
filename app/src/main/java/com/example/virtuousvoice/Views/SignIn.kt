@@ -1,12 +1,16 @@
-package com.example.virtuousvoice
+package com.example.virtuousvoice.Views
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.virtuousvoice.R
+import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
@@ -19,46 +23,34 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignIn : AppCompatActivity() {
+    private val sharedPrefFile = Common.APP_NAME
     private var auth: FirebaseAuth = Firebase.auth
     private lateinit var usertype: String
     val db = Firebase.firestore
-
-
-
+    lateinit var etEmail: String
+    lateinit var etPassword: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-
-
-        usertype = intent.getStringExtra(USER_TYPE).toString()
-        var etEmail: String
-        var etPassword: String
+        getData()
         _sign_in_as.setText("signing in as " + usertype)
 
 
-        //Signin button
+        //SignIn button
         _btn_sign_in.setOnClickListener{
             etEmail = _sign_in_email.text.toString()
             etPassword =_sign_in_password.text.toString()
             AuthenticateUser(etEmail,etPassword)
         }
 
-        //Taking use to sign up as parent screen
-        _sign_up_as_parent.setOnClickListener{
+        //Signup Link
+
+        _sign_in_screen_sign_up_link.setOnClickListener{
+            //Creating Intent
             val intent = Intent(this, ParentSignup::class.java)
             startActivity(intent)
-            finish()
         }
-
-        //Taking use to sign up as child screen
-        _sign_up_as_child.setOnClickListener{
-            val intent = Intent(this, ChildSignup::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-
     }
 
     private fun AuthenticateUser(email: String, password: String){
@@ -93,6 +85,13 @@ class SignIn : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+
+    fun getData(){
+        val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences =  sharedPreferences
+        usertype = sharedPref.getString(USER_TYPE, "").toString()
     }
 }
 
