@@ -47,7 +47,7 @@
                 android:textSize="24dp"/>
 
             <EditText
-                android:id="@+id/_sign_up_email"
+                android:id="@+id/_link_child_email"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
@@ -60,7 +60,7 @@
                 android:background="@drawable/edit_text_background"/>
 
             <EditText
-                android:id="@+id/_sign_up_username"
+                android:id="@+id/_link_child_name"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
@@ -80,7 +80,7 @@
                 android:gravity="center"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/_btn_sign_up"
+                android:id="@+id/_btn_link_child"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"

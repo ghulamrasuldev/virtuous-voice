@@ -71,6 +71,29 @@ class SignIn : AppCompatActivity() {
                                 intent.putExtra(USER_EMAIL, document.data[USER_EMAIL].toString())
                                 intent.putExtra(USER_NAME, document.data[USER_NAME].toString())
                                 intent.putExtra(USER_PHONE, document.data[USER_PHONE].toString())
+
+
+
+                                //Saving UserType in Shared Preferences
+                                val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+                                val sharedPref: SharedPreferences.Editor = sharedPreferences.edit()
+                                //Email
+                                sharedPref.putString(USER_EMAIL, document.data[USER_EMAIL].toString())
+                                sharedPref.apply()
+                                //username
+                                sharedPref.putString(USER_NAME, document.data[USER_NAME].toString())
+                                sharedPref.apply()
+                                //number
+                                sharedPref.putString(USER_PHONE, document.data[USER_PHONE].toString())
+                                sharedPref.apply()
+                                //number
+                                sharedPref.putString(Common.LOGIN_STATUS, Common.LOGGED_IN)
+                                sharedPref.apply()
+
+                                Common.userName = document.data[USER_NAME].toString()
+                                Common.userEmail = document.data[USER_EMAIL].toString()
+                                Common.userPhone = document.data[USER_PHONE].toString()
+
                                 startActivity(intent)
                                 finish()
                             }

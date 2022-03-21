@@ -13,7 +13,9 @@ import com.example.virtuousvoice.DataClasses.LinkedChildData
 import com.example.virtuousvoice.R
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
+import com.example.virtuousvoice.utilties.Common.LINKED_CHILDS
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
+import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
 import com.example.virtuousvoice.utilties.Common.USER_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE
@@ -44,8 +46,8 @@ class ChildernFragment (userType: String, userName: String, userEmail: String, u
         super.onViewCreated(view, savedInstanceState)
         _user_name.text = "Hi $userName!"
 
-        db.collection(USER_COLLECTION)
-            .whereEqualTo(USER_PHONE, userPhone)
+        db.collection(LINKED_CHILDS)
+            .whereEqualTo(USER_EMAIL, userEmail)
             .get()
             .addOnSuccessListener { documents ->
                 var dateArray = ArrayList<String>()

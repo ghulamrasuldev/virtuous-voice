@@ -39,7 +39,7 @@ class WelcomeScreen : AppCompatActivity() {
         //Continue as Child
         _sign_in_as_child.setOnClickListener{
             //Creating Intent
-            val intent = Intent(this, ChildSignup::class.java)
+            val intent = Intent(this, LinkChild::class.java)
             //Saving UserType in Shared Preferences
             Common.userType = USER_TYPE_CHILD
             val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)

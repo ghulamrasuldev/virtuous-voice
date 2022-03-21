@@ -13,15 +13,16 @@ import com.example.virtuousvoice.utilties.Common
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment: Fragment() {
-
     private lateinit var userType: String
     private lateinit var userName: String
     private lateinit var userEmail: String
     private lateinit var userPhone: String
 
     init {
+
         getData()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -35,6 +36,7 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         _user_name.text = "Hi $userName!"
         val AudioList = dummyData()
         val CapturedAudioView = _captured_voice_notes

@@ -16,6 +16,8 @@ import com.example.virtuousvoice.utilties.Common.AUTHENTICATION_FAILED_ERROR
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
 import com.example.virtuousvoice.utilties.Common.EMPTY_FIELDS_ERROR
+import com.example.virtuousvoice.utilties.Common.LOGGED_IN
+import com.example.virtuousvoice.utilties.Common.LOGIN_STATUS
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
@@ -96,6 +98,10 @@ class ParentSignup : AppCompatActivity() {
                                     //number
                                     sharedPref.putString(USER_PHONE, etNumber.trim())
                                     sharedPref.apply()
+                                    //number
+                                    sharedPref.putString(LOGIN_STATUS, LOGGED_IN)
+                                    sharedPref.apply()
+
 
                                     Common.userName = etUserName
                                     Common.userEmail = etEmail

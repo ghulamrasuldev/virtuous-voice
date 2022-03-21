@@ -26,6 +26,7 @@ class TabbedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabbed)
+
         userType = intent.getStringExtra(USER_TYPE).toString()
         userName = intent.getStringExtra(USER_NAME).toString()
         userEmail = intent.getStringExtra(USER_EMAIL).toString()

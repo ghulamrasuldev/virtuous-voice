@@ -24,7 +24,7 @@
             android:name=".Views.TabbedActivity"
             android:exported="true" />
         <activity
-            android:name=".Views.ChildSignup"
+            android:name=".Views.LinkChild"
             android:exported="true" />
         <activity
             android:name=".Views.ParentSignup"
