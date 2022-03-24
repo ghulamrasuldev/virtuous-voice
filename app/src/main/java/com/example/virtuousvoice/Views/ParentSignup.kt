@@ -60,6 +60,12 @@ class ParentSignup : AppCompatActivity() {
         _btn_parent_signup_signin_link.setOnClickListener{
             finish()
         }
+        _parent_signup_as_child.setOnClickListener{
+            //Creating Intent
+            val intent = Intent(this, LinkChild::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

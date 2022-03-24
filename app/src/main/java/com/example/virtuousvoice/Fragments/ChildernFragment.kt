@@ -11,6 +11,7 @@ import com.example.virtuousvoice.Adaptors.LinkedChildAdaptor
 import com.example.virtuousvoice.DataClasses.CapturedVoiceData
 import com.example.virtuousvoice.DataClasses.LinkedChildData
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
 import com.example.virtuousvoice.utilties.Common.LINKED_CHILDS
@@ -30,20 +31,22 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.linked_child_card.*
 
 
-class ChildernFragment (userType: String, userName: String, userEmail: String, userPhone: String): Fragment() {
+class ChildernFragment (): Fragment() {
     private var auth: FirebaseAuth = Firebase.auth
     val db = Firebase.firestore
 
-    private var userType: String = userType
-    private var userName: String = userName
-    private var userEmail: String = userEmail
-    private var userPhone: String = userPhone
+    private lateinit var userType: String
+    private lateinit var userName: String
+    private lateinit var userEmail: String
+    private lateinit var userPhone: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getData()
         _user_name.text = "Hi $userName!"
 
         db.collection(LINKED_CHILDS)
@@ -68,6 +71,13 @@ class ChildernFragment (userType: String, userName: String, userEmail: String, u
                 LinkedChildView.adapter = LinkedChildAdaptor(ChildList)
                 LinkedChildView.layoutManager =  LinearLayoutManager(activity)
             }
+    }
+
+    private fun getData() {
+        this.userType = Common.userType
+        this.userEmail = Common.userEmail
+        this.userName = Common.userName
+        this.userPhone = Common.userPhone
     }
 
     override fun onCreateView(

@@ -7,55 +7,34 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.example.virtuousvoice.R
 import com.example.virtuousvoice.utilties.Common
-import com.example.virtuousvoice.utilties.Common.AUTHENTICATION_FAILED_ERROR
-import com.example.virtuousvoice.utilties.Common.DATE
-import com.example.virtuousvoice.utilties.Common.DAY
-import com.example.virtuousvoice.utilties.Common.INVALID_EMAIL
-import com.example.virtuousvoice.utilties.Common.LINKED_CHILDS
-import com.example.virtuousvoice.utilties.Common.NO_PARENT_FOUND_ERROR
-import com.example.virtuousvoice.utilties.Common.TOKEN
-import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
-import com.example.virtuousvoice.utilties.Common.USER_EMAIL
-import com.example.virtuousvoice.utilties.Common.USER_NAME
-import com.example.virtuousvoice.utilties.Common.USER_PHONE
-import com.example.virtuousvoice.utilties.Common.USER_TYPE
-import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
-import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT
-import com.example.virtuousvoice.utilties.Common.VERIFY_PASSWORD_ERROR
-import com.example.virtuousvoice.utilties.Common.isEmailValid
-import com.example.virtuousvoice.utilties.Common.isPasswordValid
-import com.example.virtuousvoice.utilties.Common.sendEmail
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_child_signup.*
 import java.time.LocalDate
-import kotlin.random.Random
 
 class LinkChild : AppCompatActivity() {
+
 
     private val sharedPrefFile = Common.APP_NAME
     private lateinit var auth: FirebaseAuth
     val db = Firebase.firestore
     private val TAG = "testTag"
-    private lateinit var etUserName: String
-    private lateinit var etEmail: String
-    private lateinit var etNumber: String
-    private lateinit var etPassword: String
-    private lateinit var etVerifyPassword: String
     private lateinit var code: String
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_child_signup)
+        setContentView(R.layout.activity_link_child)
+
+
         auth = Firebase.auth
 
         //Linking Parent Email
@@ -67,23 +46,62 @@ class LinkChild : AppCompatActivity() {
         _btn_sign_up_verify.setOnClickListener{
             linkChild()
         }
+
+        _child_sign_up_parent_link.setOnClickListener{
+            val intent = Intent(this, SignIn::class.java)
+            startActivity(intent)
+        }
+
+
+    }
+
+
+
+    private fun saveInSharedPreferences() {
+        //Saving UserType in Shared Preferences
+        val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences.Editor = sharedPreferences.edit()
+        //Email
+        sharedPref.putString(Common.USER_EMAIL, _link_child_email.text.toString())
+        sharedPref.apply()
+        //username
+        sharedPref.putString(Common.USER_NAME, _link_child_name.text.toString())
+        sharedPref.apply()
+        //number
+        sharedPref.putString(Common.USER_PHONE, "sajgdasa")
+        sharedPref.apply()
+        //userType
+        sharedPref.putString(Common.USER_TYPE, Common.USER_TYPE_CHILD)
+        sharedPref.apply()
+        //Logged in Status
+        sharedPref.putString(Common.LOGIN_STATUS, Common.LOGGED_IN)
+        sharedPref.apply()
+
+
+        Common.userPhone = "sakjhdgghas"
+        Common.userType = Common.USER_TYPE_CHILD
+        Common.userEmail = _link_child_email.text.toString()
+        Common.userName = _link_child_name.text.toString()
+
+        Toast.makeText(this, sharedPreferences.getString(Common.USER_EMAIL, ""), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, sharedPreferences.getString(Common.USER_NAME, ""), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, sharedPreferences.getString(Common.USER_TYPE, ""), Toast.LENGTH_SHORT).show()
     }
 
     private fun verifyParentEmail() {
         var flag = false
-        etEmail = _link_child_email.text.toString().trim()
-        etUserName = _link_child_name.text.toString().trim()
         code =(100000..999999).random().toString()
         Log.d("TAG:", code)
+        Toast.makeText(this, code, Toast.LENGTH_LONG).show()
 
-        auth.fetchSignInMethodsForEmail(etEmail).addOnSuccessListener(this) { task ->
+        auth.fetchSignInMethodsForEmail(_link_child_email.text.toString()).addOnSuccessListener(this) { task ->
             if (!task.signInMethods?.isEmpty()!!){
-                db.collection(LINKED_CHILDS)
-                    .whereEqualTo(USER_EMAIL,etEmail)
+                db.collection(Common.LINKED_CHILDS)
+                    .whereEqualTo(Common.USER_EMAIL,_link_child_email.text.toString())
                     .get()
                     .addOnSuccessListener { documents ->
                         for (document in documents){
-                            if (document[USER_NAME] == etUserName){
+                            if (document[Common.USER_NAME] == _link_child_name.text.toString()){
                                 flag = true
                             }
                         }
@@ -92,8 +110,9 @@ class LinkChild : AppCompatActivity() {
                             Toast.makeText(this, "This child is already linked with this parent!\nPlease verify code to continue", Toast.LENGTH_SHORT)
                                 .show()
                         }
-                        sendEmail(etEmail,
-                            etUserName,
+                        Common.sendEmail(
+                            _link_child_email.text.toString(),
+                            _link_child_name.text.toString(),
                             code,
                             "Email Verification Code"
                         )
@@ -116,41 +135,25 @@ class LinkChild : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveToCloud() {
-        val thread = Thread {
+        saveInSharedPreferences()
             try {
                 //Your code goes here
                 val user = hashMapOf(
-                    USER_TYPE to USER_TYPE_CHILD,
-                    USER_EMAIL to etEmail,
-                    USER_NAME to etUserName,
-                    TOKEN to "" ,
-                    DATE to LocalDate.now().toString(),
-                    DAY to LocalDate.now().dayOfWeek.toString()
+                    Common.USER_TYPE to Common.USER_TYPE_CHILD,
+                    Common.USER_EMAIL to _link_child_email.text.toString(),
+                    Common.USER_NAME to _link_child_name.text.toString(),
+                    Common.TOKEN to "" ,
+                    Common.DATE to LocalDate.now().toString(),
+                    Common.DAY to LocalDate.now().dayOfWeek.toString()
                 )
-
-                //Saving UserType in Shared Preferences
-                val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-                val sharedPref: SharedPreferences.Editor = sharedPreferences.edit()
-                //Email
-                sharedPref.putString(USER_EMAIL, etEmail.trim())
-                sharedPref.apply()
-                //username
-                sharedPref.putString(USER_NAME, etUserName.trim())
-                sharedPref.apply()
-                //number
-                sharedPref.putString(USER_PHONE, "etNumber.trim()")
-                sharedPref.apply()
-                //number
-                sharedPref.putString(Common.LOGIN_STATUS, Common.LOGGED_IN)
-                sharedPref.apply()
 
                 db.collection(Common.LINKED_CHILDS).add(user).addOnSuccessListener { documentReference ->
                     Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                     //Moving to Next Screen
                     val intent = Intent(this, TabbedActivity::class.java)
-                    intent.putExtra(USER_TYPE, USER_TYPE_CHILD)
+//                    intent.putExtra(USER_TYPE, USER_TYPE_CHILD)
                     startActivity(intent)
-                    finish()
+//                    finishAffinity()
                 }.addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
@@ -158,128 +161,10 @@ class LinkChild : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-        thread.start()
         Log.d("Thread status: ", "Started")
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun createAccount(){
-        etEmail = _link_child_email.text.toString()
-        etUserName = "_sign_up_username.text.toString()"
-        etPassword = "_sign_up_password.text.toString()"
-        etNumber = "_sign_up_phone.text.toString()"
-        etVerifyPassword = "_sign_up_verify_password.text.toString()"
 
-        _progressBar.visibility = View.VISIBLE
-        if (etEmail.isNotEmpty() && etUserName.isNotEmpty() && etUserName.isNotEmpty()
-            && etPassword.isNotEmpty() && etVerifyPassword.isNotEmpty()) {
-            //Validation Rules
-            // Checking Email
-            if (isEmailValid(etEmail)) {
-                //Checking Password Strength
-                if (etPassword.isPasswordValid(this)) {
-                    //Checking if parent exist
-                    db.collection(USER_COLLECTION)
-                        .whereEqualTo(USER_PHONE, etNumber)
-                        .get()
-                        .addOnSuccessListener { documents ->
-                            var parentFoundFlag = false
-                            for (document in documents) {
-                                if(document.data[USER_TYPE].toString() == USER_TYPE_PARENT){
-                                    parentFoundFlag=true
-                                    Log.d("Test", "${document.id} => ${document.data[USER_TYPE]}")
-                                    Log.d("Test", "${document.id} => ${document.data[USER_NAME]}")
-                                    Log.d("Test", "${document.id} => ${document.data[USER_EMAIL]}")
-                                    Log.d("Test", "${document.id} => ${document.data[USER_PHONE]}")
-                                    //Verifying Password
-                                    if (etPassword.isNotEmpty() && etPassword == etVerifyPassword) {
-                                        auth.createUserWithEmailAndPassword(etEmail, etPassword)
-                                            .addOnCompleteListener(this) { task ->
-                                                if (task.isSuccessful) {
-                                                    // Sign in success, update UI with the signed-in user's information
-                                                    Log.d(TAG, "createUserWithEmail:success")
-                                                    Toast.makeText(
-                                                        baseContext, "Account Created Successfully!",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                    saveToFirestore(
-                                                        etEmail.trim(),
-                                                        etUserName.trim(),
-                                                        etNumber.trim()
-                                                    )
-                                                } else {
-                                                    _progressBar.visibility = View.INVISIBLE
-                                                    // If sign in fails, display a message to the user.
-                                                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                                    Toast.makeText(
-                                                        baseContext,
-                                                        AUTHENTICATION_FAILED_ERROR + (task.getException()?.message
-                                                            ?: ""),
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
-                                            }
-                                    } else {
-                                        _progressBar.visibility = View.INVISIBLE
-                                        Toast.makeText(this, VERIFY_PASSWORD_ERROR, Toast.LENGTH_SHORT)
-                                            .show()
-                                    }
-                                }
-                            }
-                            if (!parentFoundFlag){
-                                _progressBar.visibility = View.INVISIBLE
-                                Toast.makeText(this, NO_PARENT_FOUND_ERROR, Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-                        }
-                        .addOnFailureListener { exception ->
-                            _progressBar.visibility = View.INVISIBLE
-                            Log.w("Test", "Error getting documents: ", exception)
-                        }
-                }
-            }
-            else{
-                Toast.makeText(this, INVALID_EMAIL, Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            Toast.makeText(this, Common.EMPTY_FIELDS_ERROR, Toast.LENGTH_SHORT).show()
-        }
-    }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun saveToFirestore(userEmail: String, userName: String, userPhone: String) {
-        val currentDate = LocalDate.now()
-        val thread = Thread {
-            try {
-                //Your code goes here
-                val user = hashMapOf(
-                    USER_TYPE to USER_TYPE_CHILD,
-                    USER_EMAIL to userEmail,
-                    USER_NAME to userName,
-                    USER_PHONE to userPhone,
-                    DATE to LocalDate.now().toString(),
-                    DAY to LocalDate.now().dayOfWeek.toString()
-                )
-                db.collection(Common.USER_COLLECTION).add(user).addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                    //Moving to Next Screen
-                    val intent = Intent(this, TabbedActivity::class.java)
-                    intent.putExtra(USER_TYPE, USER_TYPE_CHILD)
-                    intent.putExtra(USER_NAME, userName)
-                    intent.putExtra(USER_EMAIL,userEmail)
-                    intent.putExtra(USER_PHONE,userPhone)
-                    startActivity(intent)
-                    finish()
-                }.addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-        thread.start()
-        Log.d("Thread status: ", "Started")
-    }
 }

@@ -3,7 +3,7 @@
     package="com.example.virtuousvoice">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,13 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtuousVoice">
         <activity
+            android:name=".Views.LinkChild"
+            android:exported="true" />
+        <activity
             android:name=".Views.RecordAudio"
             android:exported="true" />
         <activity
             android:name=".Views.TabbedActivity"
             android:exported="true" />
         <activity
-            android:name=".Views.LinkChild"
+            android:name=".Views.ChildSignup"
             android:exported="true" />
         <activity
             android:name=".Views.ParentSignup"

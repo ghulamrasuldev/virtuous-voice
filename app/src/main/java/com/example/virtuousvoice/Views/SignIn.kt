@@ -16,6 +16,7 @@ import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
 import com.example.virtuousvoice.utilties.Common.USER_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE
+import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -67,13 +68,6 @@ class SignIn : AppCompatActivity() {
                         .addOnSuccessListener { documents ->
                             for (document in documents){
                                 val intent = Intent(this, TabbedActivity::class.java)
-                                intent.putExtra(USER_TYPE, usertype)
-                                intent.putExtra(USER_EMAIL, document.data[USER_EMAIL].toString())
-                                intent.putExtra(USER_NAME, document.data[USER_NAME].toString())
-                                intent.putExtra(USER_PHONE, document.data[USER_PHONE].toString())
-
-
-
                                 //Saving UserType in Shared Preferences
                                 val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
                                 val sharedPref: SharedPreferences.Editor = sharedPreferences.edit()
@@ -86,16 +80,19 @@ class SignIn : AppCompatActivity() {
                                 //number
                                 sharedPref.putString(USER_PHONE, document.data[USER_PHONE].toString())
                                 sharedPref.apply()
-                                //number
+                                //userType
+                                sharedPref.putString(USER_TYPE, USER_TYPE_PARENT)
+                                sharedPref.apply()
+                                //Logged in Status
                                 sharedPref.putString(Common.LOGIN_STATUS, Common.LOGGED_IN)
                                 sharedPref.apply()
 
+                                Common.userType = USER_TYPE_PARENT
                                 Common.userName = document.data[USER_NAME].toString()
                                 Common.userEmail = document.data[USER_EMAIL].toString()
                                 Common.userPhone = document.data[USER_PHONE].toString()
 
                                 startActivity(intent)
-                                finish()
                             }
                         }
 

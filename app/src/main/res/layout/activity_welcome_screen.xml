@@ -43,7 +43,7 @@
             android:background="@drawable/ripple_effect"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/_sign_in_as_child"
+            android:id="@+id/_welcome_as_child"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
