@@ -30,20 +30,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-//        val sharedPref: SharedPreferences.Editor = sharedPreferences.edit()
-//        sharedPref.apply()
-//        //UserType
-//
-//        userType = sharedPreferences.getString(USER_TYPE, "").toString()
-//        userEmail = sharedPreferences.getString(USER_EMAIL, "").toString()
-//        userName = sharedPreferences.getString(USER_NAME, "").toString()
-//
-//        Toast.makeText(this, sharedPreferences.getString(USER_TYPE, "1"), Toast.LENGTH_SHORT).show()
-//        Toast.makeText(this, sharedPreferences.getString(USER_EMAIL, "2"), Toast.LENGTH_SHORT).show()
-//        Toast.makeText(this, sharedPreferences.getString(USER_NAME, "3"), Toast.LENGTH_SHORT).show()
-
-
         var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
         mUserViewModel.readAllData.observe(this, androidx.lifecycle.Observer{ producuts->
 
@@ -60,6 +46,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, WelcomeScreen::class.java)
             startActivity(intent)
             finish()
-        },3000)
+        },2000)
     }
 }

@@ -31,6 +31,7 @@ class LinkChild : AppCompatActivity() {
     val db = Firebase.firestore
     private val TAG = "testTag"
     private lateinit var code: String
+    var flag = false
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -128,7 +129,6 @@ class LinkChild : AppCompatActivity() {
     }
 
     private fun verifyParentEmail() {
-        var flag = false
         code =(100000..999999).random().toString()
         Log.d("TAG:", code)
         Toast.makeText(this, code, Toast.LENGTH_LONG).show()
@@ -177,6 +177,8 @@ class LinkChild : AppCompatActivity() {
         saveUser()
         updateUser()
 //        saveInSharedPreferences()
+
+        if (!flag){
             try {
                 //Your code goes here
                 val user = hashMapOf(
@@ -194,7 +196,7 @@ class LinkChild : AppCompatActivity() {
                     val intent = Intent(this, TabbedActivity::class.java)
 //                    intent.putExtra(USER_TYPE, USER_TYPE_CHILD)
                     startActivity(intent)
-//                    finishAffinity()
+                    finishAffinity()
                 }.addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
@@ -202,10 +204,11 @@ class LinkChild : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        Log.d("Thread status: ", "Started")
+        }else{
+            val intent = Intent(this, TabbedActivity::class.java)
+//                    intent.putExtra(USER_TYPE, USER_TYPE_CHILD)
+            startActivity(intent)
+            finishAffinity()
+        }
     }
-
-
-
-
 }

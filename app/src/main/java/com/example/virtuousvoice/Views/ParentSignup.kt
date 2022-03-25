@@ -10,7 +10,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.database.userTable
+import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.AUTHENTICATION_FAILED_ERROR
 import com.example.virtuousvoice.utilties.Common.DATE
@@ -92,26 +95,12 @@ class ParentSignup : AppCompatActivity() {
                                     Log.d(TAG, "createUserWithEmail:success")
                                     Log.d(TAG, "Saving data to FireStore")
 
-                                    //Saving UserType in Shared Preferences
-                                    val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-                                    val sharedPref: SharedPreferences.Editor = sharedPreferences.edit()
-                                    //Email
-                                    sharedPref.putString(USER_EMAIL, etEmail.trim())
-                                    sharedPref.apply()
-                                    //username
-                                    sharedPref.putString(USER_NAME, etUserName.trim())
-                                    sharedPref.apply()
-                                    //number
-                                    sharedPref.putString(USER_PHONE, etNumber.trim())
-                                    sharedPref.apply()
-                                    //number
-                                    sharedPref.putString(LOGIN_STATUS, LOGGED_IN)
-                                    sharedPref.apply()
-
-
                                     Common.userName = etUserName
                                     Common.userEmail = etEmail
                                     Common.userPhone = etNumber
+
+                                    saveUser()
+                                    updateUser()
 
                                     //Save Data to FireStore
                                     saveToFirestore(
@@ -189,6 +178,44 @@ class ParentSignup : AppCompatActivity() {
         Log.d("Thread status: ", "Started")
     }
 
+    private fun saveUser(){
+        var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
+        mUserViewModel.saveUser(
+            userTable(
+                0,
+                USER_TYPE_PARENT,
+                Common.userEmail,
+                Common.userName,
+                Common.userPhone,
+                true
+            )
+        )
+        Common.userPhone = "sakjhdgghas"
+        Common.status = true
+        Common.userType = Common.USER_TYPE_PARENT
+        Common.userEmail = Common.userEmail
+        Common.userName = Common.userName
+    }
+
+
+    private fun updateUser(){
+        var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
+        mUserViewModel.updateUser(
+            userTable(
+                0,
+                USER_TYPE_PARENT,
+                Common.userEmail,
+                Common.userName,
+                Common.userPhone,
+                true
+            )
+        )
+        Common.userPhone = Common.userPhone
+        Common.status = true
+        Common.userType = Common.USER_TYPE_PARENT
+        Common.userEmail = Common.userEmail
+        Common.userName = Common.userName
+    }
 }
 
 
