@@ -21,6 +21,20 @@ class WelcomeScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome_screen)
 
+
+
+        if (!Common.status || Common.userType == "" || Common.userEmail == "" || Common.userName ==""){
+            Common.userType = ""
+            Common.userEmail = ""
+            Common.userName = ""
+
+        }
+        else{
+            val intent = Intent(this, TabbedActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+
         //Continue as Parent
         _sign_in_as_parent.setOnClickListener{
             //Creating Intent

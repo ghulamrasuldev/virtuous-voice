@@ -10,8 +10,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.database.userTable
+import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
+import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -34,7 +38,6 @@ class LinkChild : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_link_child)
 
-
         auth = Firebase.auth
 
         //Linking Parent Email
@@ -55,7 +58,43 @@ class LinkChild : AppCompatActivity() {
 
     }
 
+    private fun saveUser(){
+        var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
+        mUserViewModel.saveUser(
+            userTable(
+                0,
+                USER_TYPE_CHILD,
+                _link_child_email.text.toString(),
+                _link_child_name.text.toString(),
+                "hello",
+                true
+            )
+        )
+        Common.userPhone = "sakjhdgghas"
+        Common.status = true
+        Common.userType = Common.USER_TYPE_CHILD
+        Common.userEmail = _link_child_email.text.toString()
+        Common.userName = _link_child_name.text.toString()
+    }
 
+    private fun updateUser(){
+        var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
+        mUserViewModel.updateUser(
+            userTable(
+                0,
+                USER_TYPE_CHILD,
+                _link_child_email.text.toString(),
+                _link_child_name.text.toString(),
+                "hello",
+                true
+            )
+        )
+        Common.userPhone = "sakjhdgghas"
+        Common.status = true
+        Common.userType = Common.USER_TYPE_CHILD
+        Common.userEmail = _link_child_email.text.toString()
+        Common.userName = _link_child_name.text.toString()
+    }
 
     private fun saveInSharedPreferences() {
         //Saving UserType in Shared Preferences
@@ -135,7 +174,9 @@ class LinkChild : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveToCloud() {
-        saveInSharedPreferences()
+        saveUser()
+        updateUser()
+//        saveInSharedPreferences()
             try {
                 //Your code goes here
                 val user = hashMapOf(

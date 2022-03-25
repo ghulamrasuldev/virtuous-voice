@@ -55,6 +55,7 @@ object Common {
     var userEmail: String = ""
     var userName: String = ""
     var userPhone: String = ""
+    var status: Boolean = false
     val db = Firebase.firestore
 
     //Password Length

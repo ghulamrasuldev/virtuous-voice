@@ -1,6 +1,7 @@
 package com.example.virtuousvoice.Fragments
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,10 +10,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.lifecycle.ViewModelProvider
 import com.example.virtuousvoice.R
 import kotlinx.android.synthetic.main.fragment_setting.*
 import com.example.virtuousvoice.Views.RecordAudio
 import com.example.virtuousvoice.Views.WelcomeScreen
+import com.example.virtuousvoice.database.userTable
+import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.CHILD_NAME
 import com.example.virtuousvoice.utilties.Common.PARENT_EMAIL
@@ -26,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_child_signup.*
 
 
 class SettingFragment() :
@@ -64,6 +70,7 @@ class SettingFragment() :
             removeData()
             val intent = Intent(activity, WelcomeScreen::class.java)
             startActivity(intent)
+            finishAffinity(this.activity as Activity)
         }
     }
 
@@ -88,6 +95,7 @@ class SettingFragment() :
         Common.userEmail = ""
         Common.userName = ""
         Common.userPhone = ""
+        updateUser()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -101,6 +109,26 @@ class SettingFragment() :
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_setting, container, false)
+    }
+
+
+    private fun updateUser(){
+        var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
+        mUserViewModel.updateUser(
+            userTable(
+                0,
+                "",
+                "",
+                "",
+                "",
+                false
+            )
+        )
+        Common.userPhone = ""
+        Common.status = false
+        Common.userType = ""
+        Common.userEmail = ""
+        Common.userName = ""
     }
 
 }

@@ -9,7 +9,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.database.userTable
+import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
@@ -21,7 +24,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_child_signup.*
 import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlinx.android.synthetic.main.activity_sign_in._progressBar
 
 class SignIn : AppCompatActivity() {
     private val sharedPrefFile = Common.APP_NAME
@@ -34,8 +39,7 @@ class SignIn : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        getData()
-        _sign_in_as.setText("signing in as " + usertype)
+        _sign_in_as.setText("signing in as Parent")
 
 
         //SignIn button
@@ -69,28 +73,12 @@ class SignIn : AppCompatActivity() {
                             for (document in documents){
                                 val intent = Intent(this, TabbedActivity::class.java)
                                 //Saving UserType in Shared Preferences
-                                val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-                                val sharedPref: SharedPreferences.Editor = sharedPreferences.edit()
-                                //Email
-                                sharedPref.putString(USER_EMAIL, document.data[USER_EMAIL].toString())
-                                sharedPref.apply()
-                                //username
-                                sharedPref.putString(USER_NAME, document.data[USER_NAME].toString())
-                                sharedPref.apply()
-                                //number
-                                sharedPref.putString(USER_PHONE, document.data[USER_PHONE].toString())
-                                sharedPref.apply()
-                                //userType
-                                sharedPref.putString(USER_TYPE, USER_TYPE_PARENT)
-                                sharedPref.apply()
-                                //Logged in Status
-                                sharedPref.putString(Common.LOGIN_STATUS, Common.LOGGED_IN)
-                                sharedPref.apply()
-
-                                Common.userType = USER_TYPE_PARENT
-                                Common.userName = document.data[USER_NAME].toString()
                                 Common.userEmail = document.data[USER_EMAIL].toString()
+                                Common.userName = document.data[USER_NAME].toString()
                                 Common.userPhone = document.data[USER_PHONE].toString()
+
+                                saveUser()
+                                updateUser()
 
                                 startActivity(intent)
                             }
@@ -107,12 +95,45 @@ class SignIn : AppCompatActivity() {
             }
     }
 
-
-    fun getData(){
-        val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-        val sharedPref: SharedPreferences =  sharedPreferences
-        usertype = sharedPref.getString(USER_TYPE, "").toString()
+    private fun saveUser(){
+        var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
+        mUserViewModel.saveUser(
+            userTable(
+                0,
+                USER_TYPE_PARENT,
+                Common.userEmail,
+                Common.userName,
+                "hello",
+                true
+            )
+        )
+        Common.userPhone = "sakjhdgghas"
+        Common.status = true
+        Common.userType = Common.USER_TYPE_PARENT
+        Common.userEmail = Common.userEmail
+        Common.userName = Common.userName
     }
+
+
+    private fun updateUser(){
+        var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
+        mUserViewModel.updateUser(
+            userTable(
+                0,
+                USER_TYPE_PARENT,
+                Common.userEmail,
+                Common.userName,
+                "hello",
+                true
+            )
+        )
+        Common.userPhone = "sakjhdgghas"
+        Common.status = true
+        Common.userType = Common.USER_TYPE_PARENT
+        Common.userEmail = Common.userEmail
+        Common.userName = Common.userName
+    }
+
 }
 
 
