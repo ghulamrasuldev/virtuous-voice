@@ -10,12 +10,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.virtuousvoice.R
 import com.example.virtuousvoice.database.userTable
 import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.AUTHENTICATION_FAILED_ERROR
+import com.example.virtuousvoice.utilties.Common.CONTINUE_WITH_EMAIL
+import com.example.virtuousvoice.utilties.Common.CONTINUE_WITH_PHONE
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
 import com.example.virtuousvoice.utilties.Common.EMPTY_FIELDS_ERROR
@@ -28,14 +31,20 @@ import com.example.virtuousvoice.utilties.Common.USER_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT
 import com.example.virtuousvoice.utilties.Common.VERIFY_PASSWORD_ERROR
+import com.example.virtuousvoice.utilties.Common.continueWith
 import com.example.virtuousvoice.utilties.Common.isEmailValid
 import com.example.virtuousvoice.utilties.Common.isValidPhone
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_parent_signup.*
 import java.time.LocalDate
+import java.util.concurrent.TimeUnit
 
 class ParentSignup : AppCompatActivity() {
 
@@ -49,15 +58,83 @@ class ParentSignup : AppCompatActivity() {
     private lateinit var etVerifyPassword: String
     val db = Firebase.firestore
 
+    var number : String =""
+
+    // we will use this to match the sent otp from firebase
+    lateinit var storedVerificationId:String
+    lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
+    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_parent_signup)
         auth = Firebase.auth
+        auth.setLanguageCode("ur")
 
+
+        // Callback function for Phone Auth
+        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+            // This method is called when the verification is completed
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+                finish()
+                Log.d("GFG" , "onVerificationCompleted Success")
+            }
+
+            // Called when verification is failed add log statement to see the exception
+            override fun onVerificationFailed(e: FirebaseException) {
+                Log.d("GFG" , "onVerificationFailed  $e")
+            }
+
+            // On code is sent by the firebase this method is called
+            // in here we start a new activity where user can enter the OTP
+            override fun onCodeSent(
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken
+            ) {
+                Log.d("GFG","onCodeSent: $verificationId")
+                storedVerificationId = verificationId
+                resendToken = token
+                // Start a new activity using intent
+                // also send the storedVerificationId using intent
+                // we will use this id to send the otp back to firebase
+
+
+                SIGNUP_SECTION.isVisible= false
+                OTP_SECTION.isVisible = true
+
+            }
+        }
+
+
+        if (continueWith == CONTINUE_WITH_PHONE){
+            _sign_up_email.isVisible = false
+        }
+        else if (continueWith == CONTINUE_WITH_EMAIL){
+            _sign_up_number.isVisible = false
+        }
+
+
+        _signup_back.setOnClickListener{
+            SIGNUP_SECTION.isVisible= true
+            OTP_SECTION.isVisible = false
+        }
+
+        _btn_sign_up_confirm_otp.setOnClickListener{
+            if (_sign_up_otp.text.toString() == storedVerificationId.toString()){
+                saveUser()
+            }
+        }
         //Signing up user
         _btn_sign_up.setOnClickListener {
-            createAccount()
+            if (continueWith == CONTINUE_WITH_EMAIL){
+                createAccountWithEmail()
+            }
+            else{
+                login()
+            }
         }
 
         _btn_parent_signup_signin_link.setOnClickListener{
@@ -72,7 +149,7 @@ class ParentSignup : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createAccount(){
+    private fun createAccountWithEmail(){
         etEmail = _sign_up_email.text.toString()
         etUserName = _sign_up_username.text.toString()
         etNumber = _sign_up_number.text.toString()
@@ -138,9 +215,9 @@ class ParentSignup : AppCompatActivity() {
         }
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveToFirestore(userEmail: String, userName: String, userPhone: String) {
+
 
         val thread = Thread {
             try {
@@ -197,7 +274,6 @@ class ParentSignup : AppCompatActivity() {
         Common.userName = Common.userName
     }
 
-
     private fun updateUser(){
         var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
         mUserViewModel.updateUser(
@@ -216,8 +292,27 @@ class ParentSignup : AppCompatActivity() {
         Common.userEmail = Common.userEmail
         Common.userName = Common.userName
     }
+
+
+    private fun login() {
+        number = _sign_up_phone.text.toString()
+        // get the phone number from edit text and append the country cde with it
+        if (number.isNotEmpty()){
+            number = "+92$number"
+            sendVerificationCode(number)
+        }else{
+            Toast.makeText(this,"Enter mobile number", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun sendVerificationCode(number: String) {
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(number) // Phone number to verify
+            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+            .setActivity(this) // Activity (for callback binding)
+            .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+        Log.d("GFG" , "Auth started")
+    }
 }
-
-
-
-

@@ -16,28 +16,42 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.VirtuousVoice">
+        android:theme="@style/Theme.VirtuousVoice"
+        android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name=".Views.ChildDashboard"
+            android:exported="true" />
+        <activity
+            android:name=".Views.PhoneEmailSelection"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Views.LinkChild"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Views.RecordAudio"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Views.TabbedActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Views.ChildSignup"
             android:exported="true" />
         <activity
             android:name=".Views.ParentSignup"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Views.SignIn"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Views.WelcomeScreen"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".DeviceAdminPolicy"
             android:exported="true" />
@@ -46,7 +60,8 @@
             android:exported="true" />
         <activity
             android:name=".Views.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

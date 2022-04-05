@@ -20,6 +20,7 @@ import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.example.virtuousvoice.utilties.Common.status
 import com.example.virtuousvoice.utilties.Common.userEmail
 import com.example.virtuousvoice.utilties.Common.userName
+import com.example.virtuousvoice.utilties.Common.userPhone
 import com.example.virtuousvoice.utilties.Common.userType
 import kotlinx.android.synthetic.main.activity_child_signup.*
 
@@ -36,8 +37,10 @@ class MainActivity : AppCompatActivity() {
             for (product in producuts){
                 userType = product.userType
                 userEmail = product.userEmail
+                Log.d("TAG: ", product.userName)
                 userName = product.userName
                 status = product.LoginStatus
+                userPhone = product.userPhone
             }
 
         })

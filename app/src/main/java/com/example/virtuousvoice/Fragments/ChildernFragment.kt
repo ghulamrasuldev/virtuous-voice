@@ -50,7 +50,7 @@ class ChildernFragment (): Fragment() {
         _user_name.text = "Hi $userName!"
 
         db.collection(LINKED_CHILDS)
-            .whereEqualTo(USER_EMAIL, userEmail)
+            .whereEqualTo(USER_PHONE, userPhone)
             .get()
             .addOnSuccessListener { documents ->
                 var dateArray = ArrayList<String>()

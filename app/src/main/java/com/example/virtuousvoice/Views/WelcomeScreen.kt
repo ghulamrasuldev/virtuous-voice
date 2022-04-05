@@ -11,6 +11,7 @@ import com.example.virtuousvoice.utilties.Common.APP_NAME
 import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT
+import com.example.virtuousvoice.utilties.Common.userType
 import kotlinx.android.synthetic.main.activity_welcome_screen.*
 
 class WelcomeScreen : AppCompatActivity() {
@@ -23,7 +24,7 @@ class WelcomeScreen : AppCompatActivity() {
 
 
 
-        if (!Common.status || Common.userType == "" || Common.userEmail == "" || Common.userName ==""){
+        if (!Common.status || Common.userType == "" || Common.userPhone == ""){
             Common.userType = ""
             Common.userEmail = ""
             Common.userName = ""
@@ -37,6 +38,9 @@ class WelcomeScreen : AppCompatActivity() {
 
         //Continue as Parent
         _sign_in_as_parent.setOnClickListener{
+
+
+            userType = USER_TYPE_PARENT
             //Creating Intent
             val intent = Intent(this, SignIn::class.java)
             startActivity(intent)
@@ -44,6 +48,9 @@ class WelcomeScreen : AppCompatActivity() {
 
         //Continue as Child
         _welcome_as_child.setOnClickListener{
+
+
+            userType = USER_TYPE_CHILD
             //Creating Intent
             val intent = Intent(this, LinkChild::class.java)
             startActivity(intent)

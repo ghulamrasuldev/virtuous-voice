@@ -5,12 +5,16 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.virtuousvoice.R
 import kotlinx.android.synthetic.main.fragment_setting.*
@@ -67,6 +71,7 @@ class SettingFragment() :
         }
 
         _logout.setOnClickListener{
+            image.isVisible = true
             removeData()
             val intent = Intent(activity, WelcomeScreen::class.java)
             startActivity(intent)
@@ -129,6 +134,21 @@ class SettingFragment() :
         Common.userType = ""
         Common.userEmail = ""
         Common.userName = ""
+    }
+
+
+    fun takeScreenshotOfView(view: View, height: Int, width: Int): Bitmap {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+
+        val canvas = Canvas(bitmap)
+        val bgDrawable = view.background
+        if (bgDrawable != null) {
+            bgDrawable.draw(canvas)
+        } else {
+            canvas.drawColor(Color.BLACK)
+        }
+        view.draw(canvas)
+        return bitmap
     }
 
 }

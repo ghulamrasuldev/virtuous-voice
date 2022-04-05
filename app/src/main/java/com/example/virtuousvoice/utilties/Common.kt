@@ -1,15 +1,24 @@
 package com.example.virtuousvoice.utilties
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import com.example.virtuousvoice.Views.WelcomeScreen
+import com.example.virtuousvoice.database.userTable
+import com.example.virtuousvoice.database.userViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_child_signup.*
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -33,6 +42,7 @@ object Common {
     const val USER_PHONE="phoneNumber"
     const val DEVICE_TOKEN = "deviceToken"
     const val PARENT_EMAIL = "parentEmail"
+    const val ACTIVE_STATUS = "ActiveStatus"
     const val CHILD_NAME ="childName"
     const val DATE ="date"
     const val DAY = "day"
@@ -51,13 +61,23 @@ object Common {
     const val NO_PARENT_FOUND_ERROR = "No Parent linked with this phone number"
     const val PHONE_REGX = "^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}\$|^\\d{11}\$|^\\d{4}-\\d{7}\$"
     private lateinit var auth: FirebaseAuth;
-    var userType: String = USER_TYPE_PARENT
+    const val CONTINUE_WITH_PHONE = "login with phone"
+    const val CONTINUE_WITH_EMAIL = "login with email"
+    var continueWith: String = ""
+    var userType: String = ""
     var userEmail: String = ""
     var userName: String = ""
     var userPhone: String = ""
     var status: Boolean = false
     val db = Firebase.firestore
+    val sample_audio = "https://firebasestorage.googleapis.com/v0/b/virtuousvoice-7efd1.appspot.com/o/toxicData%2Fhello%40gmail.com%2Fghulamrasuldev%2Fsample.mp3?alt=media&token=b7813aa8-32e3-43c5-a537-130962fe6a47"
 
+
+
+    fun sleep(){
+        Handler(Looper.getMainLooper()).postDelayed({
+        },2000)
+    }
     //Password Length
     fun String.isPasswordValid(context : Context): Boolean {
         val pattern: Pattern = Pattern.compile(PASSWORD_PATTERN)
@@ -126,5 +146,24 @@ object Common {
                 e.printStackTrace()
             }
         }.start()
+    }
+
+    fun updateUser(mNumber: String, mUserStatus: Boolean, mUserType: String, mUserEmail: String, mUserName: String, mOwner: ViewModelStoreOwner){
+        userPhone = mNumber
+        status = mUserStatus
+        userType = mUserType
+        userEmail = mUserEmail
+        userName = mUserName
+        val mUserViewModel = ViewModelProvider(mOwner).get(userViewModel::class.java)
+        mUserViewModel.updateUser(
+            userTable(
+                0,
+                USER_TYPE_CHILD,
+                userEmail,
+                userName,
+                userPhone,
+                true
+            )
+        )
     }
 }
