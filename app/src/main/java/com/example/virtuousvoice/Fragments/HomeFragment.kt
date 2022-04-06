@@ -1,5 +1,6 @@
 package com.example.virtuousvoice.Fragments
 
+import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.virtuousvoice.Adaptors.CapturedAudiosAdaptor
 import com.example.virtuousvoice.DataClasses.CapturedVoiceData
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.Services.ParentService
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT

@@ -1,6 +1,7 @@
 package com.example.virtuousvoice.Views
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import com.example.virtuousvoice.Fragments.ChildernFragment
 import com.example.virtuousvoice.Fragments.HomeFragment
 import com.example.virtuousvoice.Fragments.SettingFragment
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.Services.ChildService
+import com.example.virtuousvoice.Services.ParentService
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
@@ -22,6 +25,12 @@ class TabbedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabbed)
+
+        Intent(this, ParentService::class.java).also {
+            Log.d("Starting: ", "Parent Service")
+            startService(it)
+        }
+
         createTabs()
     }
 
