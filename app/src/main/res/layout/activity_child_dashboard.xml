@@ -11,6 +11,7 @@
 
 
     <TextView
+        android:id="@+id/hi_there"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hi there!"
@@ -19,9 +20,16 @@
         android:layout_margin="4dp"
         android:textSize="24sp"
         android:layout_marginBottom="8dp"/>
+    
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/child_dashboard_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
     <LinearLayout
-        android:id="@+id/_update_child_info_notification"
+        android:id="@+id/_add_child_info_notification"
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,11 +59,11 @@
 
 
     <LinearLayout
-        android:id="@+id/_btn_logout"
+        android:id="@+id/child_instructions"
         android:padding="8dp"
-        android:layout_margin="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:background="@drawable/notification_bg"
         android:orientation="vertical">
 
@@ -63,20 +71,172 @@
             android:textColor="@color/primary_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/updateEmailText"/>
+            android:text="Notice, You are in control. We are monitoring your: \n-   Call Records\n-   Your active Status"/>
 
         <TextView
             android:textColor="@color/primary_color"
-            android:id="@+id/_update_email_inf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Instructions:\n-   Avoid using toxic language\n-   Don't try to delete app, you will be reported instantly\n-   Don't logout from app without permissions from parent"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/_btn_logout"
+        android:padding="8dp"
+        android:layout_margin="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:background="@drawable/ripple_effect">
+
+        <TextView
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="20sp"
+            android:text="Logout"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_arrow_right"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/VERIFY_ADD_NUMBER_SECTION"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/child_dashboard_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update Now"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:padding="8dp"
-            android:background="@drawable/ripple_effect"
-            android:elevation="16dp"/>
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Virtuous Voice"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/LINK_CHILD_SECTION"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Link child with parent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textSize="24dp"/>
+
+            <EditText
+                android:id="@+id/child_dashboard_number"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:hint="Add parent phone"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColorHint="@color/disabled_white"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/edit_text_background"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/_btn_verify_number"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:text="Link"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/ripple_effect"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/CHILD_DASHBOARD_OTP_SECTION"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Please verify with 6-digit\nsent on linked Phone Number"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:textSize="24dp"/>
+
+            <EditText
+                android:id="@+id/_child_dashboard_otp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:hint="verify with 6-digit code"
+                android:textSize="20sp"
+                android:inputType="number"
+                android:maxLength="6"
+                android:gravity="center"
+                android:textColorHint="@color/disabled_white"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/edit_text_background"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/_child_dashboard_verify_otp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:text="Verify"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/ripple_effect"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

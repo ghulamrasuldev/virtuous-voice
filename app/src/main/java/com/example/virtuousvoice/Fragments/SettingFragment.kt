@@ -126,7 +126,8 @@ class SettingFragment() :
                 "",
                 "",
                 "",
-                false
+                false,
+                ""
             )
         )
         Common.userPhone = ""

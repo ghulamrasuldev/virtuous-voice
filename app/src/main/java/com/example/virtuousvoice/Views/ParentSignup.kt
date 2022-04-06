@@ -22,6 +22,7 @@ import com.example.virtuousvoice.utilties.Common.CONTINUE_WITH_PHONE
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
 import com.example.virtuousvoice.utilties.Common.EMPTY_FIELDS_ERROR
+import com.example.virtuousvoice.utilties.Common.FUID
 import com.example.virtuousvoice.utilties.Common.LOGGED_IN
 import com.example.virtuousvoice.utilties.Common.LOGIN_STATUS
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
@@ -264,7 +265,8 @@ class ParentSignup : AppCompatActivity() {
                 Common.userEmail,
                 Common.userName,
                 Common.userPhone,
-                true
+                true,
+                FUID
             )
         )
         Common.userPhone = "sakjhdgghas"
@@ -283,7 +285,8 @@ class ParentSignup : AppCompatActivity() {
                 Common.userEmail,
                 Common.userName,
                 Common.userPhone,
-                true
+                true,
+                FUID
             )
         )
         Common.userPhone = Common.userPhone

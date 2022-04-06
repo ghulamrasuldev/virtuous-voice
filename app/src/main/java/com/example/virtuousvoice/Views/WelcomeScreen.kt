@@ -31,9 +31,15 @@ class WelcomeScreen : AppCompatActivity() {
 
         }
         else{
-            val intent = Intent(this, TabbedActivity::class.java)
-            startActivity(intent)
-            finishAffinity()
+            if (userType == USER_TYPE_CHILD){
+                val intent = Intent(this, ChildDashboard::class.java)
+                startActivity(intent)
+                finishAffinity()
+            }else{
+                val intent = Intent(this, TabbedActivity::class.java)
+                startActivity(intent)
+                finishAffinity()
+            }
         }
 
         //Continue as Parent

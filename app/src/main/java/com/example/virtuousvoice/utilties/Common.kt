@@ -29,6 +29,10 @@ import javax.mail.internet.MimeMessage
 import javax.mail.internet.MimeMultipart
 
 object Common {
+    const val CHILD_UPDATE_TIME: Long = 10000
+    const val PARENT_CHECK_TIME: Long = 30000
+    const val MAX_GAP_TIME: Long = 20000
+
     const val APP_NAME: String = "virtuous-voice"
     const val USER_TYPE: String = "userType"
     const val USER_TYPE_PARENT: String = "parent"
@@ -69,6 +73,7 @@ object Common {
     var userName: String = ""
     var userPhone: String = ""
     var status: Boolean = false
+    var FUID: String = ""
     val db = Firebase.firestore
     val sample_audio = "https://firebasestorage.googleapis.com/v0/b/virtuousvoice-7efd1.appspot.com/o/toxicData%2Fhello%40gmail.com%2Fghulamrasuldev%2Fsample.mp3?alt=media&token=b7813aa8-32e3-43c5-a537-130962fe6a47"
 
@@ -148,12 +153,13 @@ object Common {
         }.start()
     }
 
-    fun updateUser(mNumber: String, mUserStatus: Boolean, mUserType: String, mUserEmail: String, mUserName: String, mOwner: ViewModelStoreOwner){
+    fun updateUser(mNumber: String, mUserStatus: Boolean, mUserType: String, mUserEmail: String, mUserName: String, mOwner: ViewModelStoreOwner, UID: String){
         userPhone = mNumber
         status = mUserStatus
         userType = mUserType
         userEmail = mUserEmail
         userName = mUserName
+        FUID = UID
         val mUserViewModel = ViewModelProvider(mOwner).get(userViewModel::class.java)
         mUserViewModel.updateUser(
             userTable(
@@ -162,7 +168,8 @@ object Common {
                 userEmail,
                 userName,
                 userPhone,
-                true
+                true,
+                FUID
             )
         )
     }

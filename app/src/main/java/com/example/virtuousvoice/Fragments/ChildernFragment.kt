@@ -1,5 +1,6 @@
 package com.example.virtuousvoice.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.example.virtuousvoice.Adaptors.LinkedChildAdaptor
 import com.example.virtuousvoice.DataClasses.CapturedVoiceData
 import com.example.virtuousvoice.DataClasses.LinkedChildData
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.Services.ChildService
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
@@ -42,6 +44,7 @@ class ChildernFragment (): Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

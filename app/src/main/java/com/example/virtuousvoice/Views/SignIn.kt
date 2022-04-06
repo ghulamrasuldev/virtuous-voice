@@ -15,6 +15,7 @@ import com.example.virtuousvoice.R
 import com.example.virtuousvoice.database.userTable
 import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
+import com.example.virtuousvoice.utilties.Common.FUID
 import com.example.virtuousvoice.utilties.Common.USER_COLLECTION
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
@@ -166,7 +167,8 @@ class SignIn : AppCompatActivity() {
                 "",
                 "",
                 number,
-                true
+                true,
+                FUID
             )
         )
         Common.userPhone = "sakjhdgghas"
@@ -187,7 +189,8 @@ class SignIn : AppCompatActivity() {
                 userEmail,
                 userName,
                 userPhone,
-                true
+                true,
+                FUID
             )
         )
         Common.userPhone = number
@@ -235,6 +238,7 @@ class SignIn : AppCompatActivity() {
                         userEmail = documment.data[USER_EMAIL].toString()
                         userPhone = documment.data[USER_PHONE].toString()
                         userName = documment.data[USER_NAME].toString()
+                        FUID = documment.id
                     }
                 }
                 if (userExist){

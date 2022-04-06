@@ -12,7 +12,8 @@ data class userTable (
     val userEmail: String,
     val userName: String,
     val userPhone: String,
-    val LoginStatus: Boolean
+    val LoginStatus: Boolean,
+    val FUID: String
 )
 
 

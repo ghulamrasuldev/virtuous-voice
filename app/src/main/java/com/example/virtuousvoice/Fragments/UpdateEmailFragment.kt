@@ -11,6 +11,7 @@ import com.example.virtuousvoice.R
 import com.example.virtuousvoice.database.userTable
 import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
+import com.example.virtuousvoice.utilties.Common.FUID
 import com.example.virtuousvoice.utilties.Common.LINKED_CHILDS
 import com.example.virtuousvoice.utilties.Common.userEmail
 import com.example.virtuousvoice.utilties.Common.userName
@@ -87,7 +88,8 @@ class UpdateEmailFragment : BottomSheetDialogFragment() {
                 userEmail,
                 Common.userName,
                 Common.userPhone,
-                true
+                true,
+                FUID
             )
         )
     }

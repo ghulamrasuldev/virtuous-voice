@@ -18,6 +18,7 @@ import com.example.virtuousvoice.database.userTable
 import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.ACTIVE_STATUS
+import com.example.virtuousvoice.utilties.Common.FUID
 import com.example.virtuousvoice.utilties.Common.LINKED_CHILDS
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
@@ -64,7 +65,6 @@ class LinkChild : AppCompatActivity() {
     lateinit var credential: PhoneAuthCredential
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_link_child)
@@ -185,6 +185,7 @@ class LinkChild : AppCompatActivity() {
                         userEmail = document.data[USER_EMAIL].toString()
                         userPhone = document.data[USER_PHONE].toString()
                         status = true
+                        FUID = document.id
                     }
                 }
 
@@ -195,9 +196,10 @@ class LinkChild : AppCompatActivity() {
                         USER_TYPE_CHILD,
                         userEmail,
                         userName,
-                        this
+                        this,
+                        FUID
                     )
-                    val intent = Intent(this, TabbedActivity::class.java)
+                    val intent = Intent(this, ChildDashboard::class.java)
                     startActivity(intent)
                     finishAffinity()
                 }
@@ -232,9 +234,10 @@ class LinkChild : AppCompatActivity() {
                                     USER_TYPE_CHILD,
                                     "",
                                     _link_child_name.text.toString(),
-                                    this
+                                    this,
+                                    FUID
                                 )
-                                val intent = Intent(this, TabbedActivity::class.java)
+                                val intent = Intent(this, ChildDashboard::class.java)
                                 startActivity(intent)
                                 finishAffinity()
                             }.addOnFailureListener { e ->
