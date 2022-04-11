@@ -71,13 +71,15 @@
             android:textColor="@color/primary_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:text="Notice, You are in control. We are monitoring your: \n-   Call Records\n-   Your active Status"/>
 
         <TextView
             android:textColor="@color/primary_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Instructions:\n-   Avoid using toxic language\n-   Don't try to delete app, you will be reported instantly\n-   Don't logout from app without permissions from parent"/>
+            android:textSize="16sp"
+            android:text="Instructions:\n-   Avoid using toxic language\n-   Don't try to delete app, you will be reported\n-   Don't logout from app without permissions from parent"/>
 
     </LinearLayout>
 

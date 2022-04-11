@@ -132,7 +132,7 @@
             android:text="Signup"
             android:gravity="center"
             android:fontFamily="@font/montserrat"
-            android:background="@drawable/button_background"/>
+            android:background="@drawable/ripple_effect"/>
 
 
     </LinearLayout>

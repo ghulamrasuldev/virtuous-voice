@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -19,6 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtuousVoice"
+        android:requestLegacyExternalStorage="true"
         android:windowSoftInputMode="adjustResize">
         <activity
             android:name=".Views.ChildDashboard"
@@ -40,9 +45,6 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Views.ChildSignup"
-            android:exported="true" />
-        <activity
             android:name=".Views.ParentSignup"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
@@ -54,12 +56,7 @@
             android:name=".Views.WelcomeScreen"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".DeviceAdminPolicy"
-            android:exported="true" />
-        <activity
-            android:name=".CreatePin"
-            android:exported="true" />
+
         <activity
             android:name=".Views.MainActivity"
             android:exported="true"
@@ -72,6 +69,18 @@
         </activity>
         <service android:name=".Services.ChildService"/>
         <service android:name=".Services.ParentService"/>
+        <service
+            android:name=".Services.FloatingService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver android:name=".Services.CallBroadcastReciever"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

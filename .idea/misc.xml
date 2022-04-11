@@ -14,11 +14,12 @@
         <entry key="app/src/main/res/drawable/icon_play.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/drawable/icon_setting.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/drawable/notification_bg.xml" value="0.3182291666666667" />
+        <entry key="app/src/main/res/drawable/overlay_layout.xml" value="0.30364583333333334" />
         <entry key="app/src/main/res/drawable/player_background.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/drawable/ripple_effect.xml" value="0.17037037037037037" />
         <entry key="app/src/main/res/drawable/square_button_background.xml" value="0.31145833333333334" />
         <entry key="app/src/main/res/drawable/toxic_data_background.xml" value="0.321025641025641" />
-        <entry key="app/src/main/res/layout/activity_child_dashboard.xml" value="0.2375" />
+        <entry key="app/src/main/res/layout/activity_child_dashboard.xml" value="0.25966720243795754" />
         <entry key="app/src/main/res/layout/activity_child_signup.xml" value="0.29743589743589743" />
         <entry key="app/src/main/res/layout/activity_create_pin.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_device_admin_policy.xml" value="0.3098958333333333" />
@@ -30,13 +31,14 @@
         <entry key="app/src/main/res/layout/activity_phone_email_selection.xml" value="0.3020833333333333" />
         <entry key="app/src/main/res/layout/activity_record_audio.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/activity_tabbed.xml" value="0.20007875234773165" />
+        <entry key="app/src/main/res/layout/activity_tabbed.xml" value="0.28307692307692306" />
         <entry key="app/src/main/res/layout/activity_welcome_screen.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/captured_voice_card.xml" value="0.43711083437110837" />
         <entry key="app/src/main/res/layout/edit_text_fragment_bg.xml" value="0.3020833333333333" />
         <entry key="app/src/main/res/layout/fragment_childern.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/layout_overlay.xml" value="0.2875" />
         <entry key="app/src/main/res/layout/linked_child.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/linked_child_card.xml" value="0.526543543882984" />
         <entry key="app/src/main/res/layout/update_data_fragment.xml" value="0.27708333333333335" />
