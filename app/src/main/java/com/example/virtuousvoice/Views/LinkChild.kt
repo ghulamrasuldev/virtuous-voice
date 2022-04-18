@@ -25,6 +25,7 @@ import com.example.virtuousvoice.utilties.Common.USER_NAME
 import com.example.virtuousvoice.utilties.Common.USER_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.Common.status
+import com.example.virtuousvoice.utilties.Common.trimNumber
 import com.example.virtuousvoice.utilties.Common.updateUser
 import com.example.virtuousvoice.utilties.Common.userEmail
 import com.example.virtuousvoice.utilties.Common.userName
@@ -132,7 +133,7 @@ class LinkChild : AppCompatActivity() {
         number = _link_child_parent_phone.text.toString()
         // get the phone number from edit text and append the country cde with it
         if (number.isNotEmpty()){
-            number = "+92$number"
+            number = "+92${trimNumber(number)}"
             sendVerificationCode(number)
         }else{
             Toast.makeText(this,"Enter mobile number", Toast.LENGTH_SHORT).show()

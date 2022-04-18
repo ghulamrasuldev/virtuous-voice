@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.virtuousvoice.Adaptors.CapturedAudiosAdaptor.*
 import com.example.virtuousvoice.DataClasses.CapturedVoiceData
@@ -24,8 +25,9 @@ class CapturedAudiosAdaptor(private val voiceList: List<CapturedVoiceData>): Rec
         val userName = itemView._user_name
         val date = itemView._captured_date
         val day = itemView._captured_day
-        val playButton = itemView._play_button
-        val positionBar = itemView.positionBar
+        val stopButton = itemView._stop
+        val downloadButton = itemView._download
+        val playButton = itemView._play
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CaptureAudiosHolder {
@@ -46,40 +48,28 @@ class CapturedAudiosAdaptor(private val voiceList: List<CapturedVoiceData>): Rec
 
         Thread {
                 mp.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                mp.setDataSource(Common.sample_audio)
-                mp.prepare()
-                flag = true
         }.start()
 
-        holder.playButton.setOnClickListener {
-            if (playingStatus == "stopped"){
-                holder.playButton.setImageResource(R.drawable.icon_pause)
-                mp.start()
-                playingStatus = "started"
-            }
-            else{
-                holder.playButton.setImageResource(R.drawable.icon_play)
-                mp.pause()
-                playingStatus = "stopped"
-            }
 
+        holder.downloadButton.setOnClickListener {
+            holder.downloadButton.isVisible = false
+            holder.playButton.isVisible = true
+            mp.setDataSource(Common.sample_audio)
+            mp.prepare()
+            flag = true
         }
 
-        // Position Bar
-        holder.positionBar.max = timeDuration
-        holder.positionBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    if (fromUser) {
-                        mp.seekTo(progress)
-                    }
-                }
-                override fun onStartTrackingTouch(p0: SeekBar?) {
-                }
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-                }
-            }
-        )
+        holder.playButton.setOnClickListener {
+            holder.playButton.isVisible = false
+            holder.stopButton.isVisible = true
+            mp.start()
+        }
+
+        holder.stopButton.setOnClickListener {
+            holder.playButton.isVisible = true
+            holder.stopButton.isVisible = false
+            mp.pause()
+        }
     }
     override fun getItemCount() = voiceList.size
 }

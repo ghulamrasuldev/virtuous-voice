@@ -24,6 +24,7 @@ import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT
 import com.example.virtuousvoice.utilties.Common.sleep
+import com.example.virtuousvoice.utilties.Common.trimNumber
 import com.example.virtuousvoice.utilties.Common.userEmail
 import com.example.virtuousvoice.utilties.Common.userName
 import com.example.virtuousvoice.utilties.Common.userPhone
@@ -37,12 +38,13 @@ import kotlinx.android.synthetic.main.activity_parent_signup.*
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_sign_in.OTP_SECTION
 import kotlinx.android.synthetic.main.activity_sign_in._progressBar
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 class SignIn : AppCompatActivity() {
-    private val sharedPrefFile = Common.APP_NAME
     private var auth: FirebaseAuth = Firebase.auth
     private lateinit var usertype: String
     val db = Firebase.firestore
@@ -139,7 +141,7 @@ class SignIn : AppCompatActivity() {
         number = _sign_in_phone.text.toString()
         // get the phone number from edit text and append the country cde with it
         if (number.isNotEmpty()){
-            number = "+92$number"
+            number = "+92${trimNumber(number)}"
             sendVerificationCode(number)
         }else{
             Toast.makeText(this,"Enter mobile number", Toast.LENGTH_SHORT).show()
@@ -171,7 +173,7 @@ class SignIn : AppCompatActivity() {
                 FUID
             )
         )
-        Common.userPhone = "sakjhdgghas"
+        Common.userPhone = number
         Common.status = true
         Common.userType = Common.USER_TYPE_PARENT
         Common.userEmail = Common.userEmail
@@ -223,7 +225,8 @@ class SignIn : AppCompatActivity() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
+
     private fun saveUserInCLoud(){
         _progressBar.isVisible = true
         var userExist = false
@@ -250,14 +253,22 @@ class SignIn : AppCompatActivity() {
                 }else{
                     val thread = Thread {
                         try {
+                            //Get Date
+                            val sdf = SimpleDateFormat("dd/MM/yyyy")
+                            val c = Calendar.getInstance()
+                            val date = sdf.format(c.time)
+
+                            //Get Day
+                            val time = c.getTime()
+                            val day = SimpleDateFormat("EEEE", Locale.ENGLISH).format(time.getTime())
                             //Your code goes here
                             val user = hashMapOf(
                                 Common.USER_TYPE to USER_TYPE_PARENT,
                                 USER_EMAIL to "",
                                 USER_NAME to "",
                                 USER_PHONE to number,
-                                Common.DATE to LocalDate.now().toString(),
-                                Common.DAY to LocalDate.now().dayOfWeek.toString()
+                                Common.DATE to date,
+                                Common.DAY to day
                             )
                             db.collection(USER_COLLECTION).add(user).addOnSuccessListener { documentReference ->
                                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")

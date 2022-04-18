@@ -55,25 +55,42 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="8dp"
-            android:padding="8dp"
+            android:padding="4dp"
             android:background="@drawable/player_background">
 
-            <ImageView
-                android:id="@+id/_play_button"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/_download"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_play"
-                android:clickable="true"/>
+                android:text="Download"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"
+                android:background="@drawable/square_button_background"/>
 
-            <SeekBar
-                android:id="@+id/positionBar"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatButton
+                android:visibility="gone"
+                android:id="@+id/_play"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:outlineAmbientShadowColor="@color/white"
-                android:outlineSpotShadowColor="@color/white"
-                android:background="@color/white"/>
+                android:text="Play"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"
+                android:background="@drawable/square_button_background"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:visibility="gone"
+                android:id="@+id/_stop"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Stop"
+                android:layout_margin="4dp"
+                android:textColor="@color/black"
+                android:background="@drawable/square_button_background"/>
+
         </LinearLayout>
-
 
     </LinearLayout>
 

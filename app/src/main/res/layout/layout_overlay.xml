@@ -6,14 +6,16 @@
     android:background="@drawable/ripple_effect"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/overlay_text_view_recording"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="@font/montserrat"
         android:text="Recording Call"
         android:textAlignment="center"
         android:textColor="@android:color/black"

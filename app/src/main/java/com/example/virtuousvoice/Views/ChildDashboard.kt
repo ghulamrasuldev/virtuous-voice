@@ -1,18 +1,25 @@
 package com.example.virtuousvoice.Views
 
+import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.virtuousvoice.Fragments.UpdateEmailFragment
 import com.example.virtuousvoice.R
 import com.example.virtuousvoice.Services.ChildService
+import com.example.virtuousvoice.Services.FloatingService
 import com.example.virtuousvoice.Services.ParentService
 import com.example.virtuousvoice.database.userTable
 import com.example.virtuousvoice.database.userViewModel
@@ -27,22 +34,24 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_child_dashboard.*
 import kotlinx.android.synthetic.main.activity_link_child.*
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 class ChildDashboard : AppCompatActivity() {
 
-
     private lateinit var auth: FirebaseAuth
     val db = Firebase.firestore
     var number = ""
-
-
     // we will use this to match the sent otp from firebase
     lateinit var storedVerificationId:String
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     var sentToken : String = ""
     lateinit var credential: PhoneAuthCredential
+
+    companion object {
+        private const val DRAW_OVER_OTHER_APP_PERMISSION = 123
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +62,9 @@ class ChildDashboard : AppCompatActivity() {
             Log.d("Starting: ", "Service")
             startService(it)
         }
+
+        askForPermissions()
+        checkAndCreateDirectory()
 
         auth = Firebase.auth
         hi_there.setText("Hi $userName")
@@ -192,4 +204,51 @@ class ChildDashboard : AppCompatActivity() {
         Common.userEmail = ""
         Common.userName = ""
     }
+
+
+    private fun checkAndCreateDirectory() {
+        val file = File(FloatingService.FOLDER_PATH)
+        if (!file.exists()) {
+            file.mkdir()
+        }
+    }
+
+    private fun askForPermissions() {
+        // system overlay permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            )
+            startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION)
+        }
+
+        val permissionNeeded = arrayOf(
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        val permissionsNotGranted = ArrayList<String>()
+
+        for (permission in permissionNeeded) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                permissionsNotGranted.add(permission)
+            }
+        }
+
+        val array = arrayOfNulls<String>(permissionsNotGranted.size)
+
+        if (array.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsNotGranted.toArray(array), 0
+            )
+        }
+    }
+
 }

@@ -61,6 +61,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:hint="Enter your phone"
+                android:inputType="number"
                 android:textSize="20sp"
                 android:gravity="center"
                 android:textColorHint="@color/disabled_white"
@@ -118,7 +119,7 @@
             android:fontFamily="@font/montserrat"
             android:gravity="center"
             android:hint="Verify password"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:textColor="@color/white"
             android:textColorHint="@color/disabled_white"
             android:textSize="20sp" />

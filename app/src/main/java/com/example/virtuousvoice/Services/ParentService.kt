@@ -64,6 +64,8 @@ class ParentService: Service() {
     }
 
     private fun checkStatus() {
+        var listOfNames = ""
+        var i = 1
         val calendar: Calendar = Calendar.getInstance()
         var list = ArrayList<String>()
         db.collection(LINKED_CHILDS)
@@ -82,20 +84,22 @@ class ParentService: Service() {
                 }
 
                 for (name in list){
-                    Log.d("TAG: ", "$name is not active")
-                    val notificationIntent = Intent(this, TabbedActivity::class.java)
-                    val pendingIntent = PendingIntent.getActivity(
-                        this,
-                        0, notificationIntent, 0
-                    )
-                    val notification: Notification = NotificationCompat.Builder(this, channelId)
-                        .setContentTitle("Hi $parent_name")
-                        .setContentText("Your child $name is not active.")
-                        .setSmallIcon(R.drawable.icon_child)
-                        .setContentIntent(pendingIntent)
-                        .build()
-                    startForeground(1, notification)
+                    listOfNames = listOfNames + "$i. Your child $name is not active\n"
+                    i++
                 }
+                Log.d("TAG: ", "$listOfNames")
+                val notificationIntent = Intent(this, TabbedActivity::class.java)
+                val pendingIntent = PendingIntent.getActivity(
+                    this,
+                    0, notificationIntent, 0
+                )
+                val notification: Notification = NotificationCompat.Builder(this, channelId)
+                    .setContentTitle("Hi $parent_name")
+                    .setContentText(listOfNames)
+                    .setSmallIcon(R.drawable.icon_child)
+                    .setContentIntent(pendingIntent)
+                    .build()
+                startForeground(1, notification)
             }
     }
 

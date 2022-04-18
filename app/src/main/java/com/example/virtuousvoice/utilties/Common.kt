@@ -44,6 +44,9 @@ object Common {
     const val LOGGED_IN = "LoggedIn"
     const val NOT_LOGGED_IN = "NotLoggedIn"
     const val USER_PHONE="phoneNumber"
+    const val AUDIO_LINK = "audioLink"
+    const val TOXIC_STATUS = "toxicStatus"
+    const val TOXIC_AUDIO_COLLECTION = "toxicAudioCollection"
     const val DEVICE_TOKEN = "deviceToken"
     const val PARENT_EMAIL = "parentEmail"
     const val ACTIVE_STATUS = "ActiveStatus"
@@ -173,4 +176,7 @@ object Common {
             )
         )
     }
+
+
+    fun trimNumber(number: String) = number.subSequence(1, number.length)
 }
