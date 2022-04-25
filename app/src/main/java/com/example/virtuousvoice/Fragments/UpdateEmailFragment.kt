@@ -1,5 +1,7 @@
 package com.example.virtuousvoice.Fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,6 +27,7 @@ import kotlinx.android.synthetic.main.update_email_fragment.*
 
 
 class UpdateEmailFragment : BottomSheetDialogFragment() {
+    private val sharedPrefFile = "virtuousVoice"
 
     private var auth: FirebaseAuth = Firebase.auth
     val db = FirebaseFirestore.getInstance()
@@ -67,6 +70,7 @@ class UpdateEmailFragment : BottomSheetDialogFragment() {
                                 userEmail = _update_email.text.toString()
                                 _update_email_progress_bar.isVisible = false
                                 updateUser()
+                                updatePreferences()
                                 dismiss()
                             }
                     }
@@ -92,5 +96,19 @@ class UpdateEmailFragment : BottomSheetDialogFragment() {
                 FUID
             )
         )
+    }
+
+    fun updatePreferences(){
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences.Editor =  sharedPreferences.edit()
+        //TOKEN
+        sharedPref.putString(Common.USER_TYPE, Common.USER_TYPE_CHILD)
+        sharedPref.apply()
+
+        sharedPref.putString(Common.USER_NAME, userName)
+        sharedPref.apply()
+
+        sharedPref.putString(Common.USER_PHONE, userPhone)
+        sharedPref.apply()
     }
 }

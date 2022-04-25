@@ -3,7 +3,9 @@ package com.example.virtuousvoice.Views
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -25,8 +27,13 @@ import com.example.virtuousvoice.database.userTable
 import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.FUID
+import com.example.virtuousvoice.utilties.Common.USER_NAME
+import com.example.virtuousvoice.utilties.Common.USER_PHONE
+import com.example.virtuousvoice.utilties.Common.USER_TYPE
+import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.Common.userEmail
 import com.example.virtuousvoice.utilties.Common.userName
+import com.example.virtuousvoice.utilties.Common.userPhone
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
@@ -38,6 +45,8 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 class ChildDashboard : AppCompatActivity() {
+
+    private val sharedPrefFile = "virtuousVoice"
 
     private lateinit var auth: FirebaseAuth
     val db = Firebase.firestore
@@ -57,6 +66,9 @@ class ChildDashboard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_child_dashboard)
+        updatePreferences()
+
+
 
         Intent(this, ChildService::class.java).also {
             Log.d("Starting: ", "Service")
@@ -167,6 +179,10 @@ class ChildDashboard : AppCompatActivity() {
                     val user = task.result?.user
 
                     removeUser()
+                    Intent(this, ChildService::class.java).also {
+                        Log.d("Starting: ", "Service")
+                        stopService(it)
+                    }
                     val intent = Intent(this, WelcomeScreen::class.java)
                     startActivity(intent)
                     finishAffinity()
@@ -249,6 +265,21 @@ class ChildDashboard : AppCompatActivity() {
                 permissionsNotGranted.toArray(array), 0
             )
         }
+    }
+
+
+    fun updatePreferences(){
+        val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedPref:SharedPreferences.Editor =  sharedPreferences.edit()
+        //TOKEN
+        sharedPref.putString(USER_TYPE, USER_TYPE_CHILD)
+        sharedPref.apply()
+
+        sharedPref.putString(USER_NAME, userName)
+        sharedPref.apply()
+
+        sharedPref.putString(USER_PHONE, userPhone)
+        sharedPref.apply()
     }
 
 }

@@ -217,12 +217,13 @@ class LinkChild : AppCompatActivity() {
 
                         try {
                             //Your code goes here
+                            val calendar: Calendar = Calendar.getInstance()
                             val user = hashMapOf(
                                 Common.USER_TYPE to Common.USER_TYPE_CHILD,
                                 USER_EMAIL to "",
                                 USER_NAME to _link_child_name.text.toString(),
                                 USER_PHONE to number,
-                                ACTIVE_STATUS to false,
+                                ACTIVE_STATUS to calendar.getTimeInMillis(),
                                 Common.DATE to date,
                                 Common.DAY to day
                             )
@@ -236,8 +237,15 @@ class LinkChild : AppCompatActivity() {
                                     "",
                                     _link_child_name.text.toString(),
                                     this,
-                                    FUID
+                                    documentReference.id
                                 )
+                                userType = USER_TYPE_CHILD
+                                userName = _link_child_name.text.toString()
+                                userEmail = ""
+                                userPhone = number
+                                status = true
+                                FUID = documentReference.id
+
                                 val intent = Intent(this, ChildDashboard::class.java)
                                 startActivity(intent)
                                 finishAffinity()

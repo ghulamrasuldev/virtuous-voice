@@ -66,15 +66,15 @@ class MainActivity : AppCompatActivity() {
         verifyStoragePermissions(this)
 
         var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)
-        mUserViewModel.readAllData.observe(this, androidx.lifecycle.Observer{ producuts->
+        mUserViewModel.readAllData.observe(this, androidx.lifecycle.Observer{ users->
 
-            for (product in producuts){
-                userType = product.userType
-                userEmail = product.userEmail
-                Log.d("TAG: ", product.userName)
-                userName = product.userName
-                status = product.LoginStatus
-                userPhone = product.userPhone
+            for (user in users){
+                userType = user.userType
+                userEmail = user.userEmail
+                Log.d("TAG: ", user.userName)
+                userName = user.userName
+                status = user.LoginStatus
+                userPhone = user.userPhone
             }
 
         })
@@ -83,6 +83,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, WelcomeScreen::class.java)
             startActivity(intent)
             finish()
-        },2000)
+        },3000)
     }
 }

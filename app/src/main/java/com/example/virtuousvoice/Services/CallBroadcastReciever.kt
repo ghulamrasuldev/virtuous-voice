@@ -17,6 +17,5 @@ class CallBroadcastReciever : BroadcastReceiver() {
                 context?.stopService(serviceIntent)
             }
         }
-
     }
 }

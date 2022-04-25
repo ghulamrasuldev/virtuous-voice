@@ -1,8 +1,12 @@
 package com.example.virtuousvoice.Services
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.app.Service
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.PixelFormat
 import android.media.MediaRecorder
 import android.net.Uri
@@ -17,19 +21,36 @@ import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.virtuousvoice.Interfaces.RetrofitInstance
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.database.userViewModel
+import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.AUDIO_LINK
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
+import com.example.virtuousvoice.utilties.Common.NEW_TO_DASHBOARD
+import com.example.virtuousvoice.utilties.Common.NEW_TO_SERVICE
 import com.example.virtuousvoice.utilties.Common.TOXIC_AUDIO_COLLECTION
 import com.example.virtuousvoice.utilties.Common.TOXIC_STATUS
 import com.example.virtuousvoice.utilties.Common.USER_NAME
 import com.example.virtuousvoice.utilties.Common.USER_PHONE
+import com.example.virtuousvoice.utilties.Common.USER_TYPE
+import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
+import com.example.virtuousvoice.utilties.ToxicApiInput
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
@@ -38,7 +59,13 @@ val sample = "FILE_NAME.mp3"
 val first = "https://firebasestorage.googleapis.com/v0/b/virtuousvoice-7efd1.appspot.com/o/toxicData%2F%2B92"
 val last= "?alt=media"
 
+var usertype = ""
+var username = ""
+var userphone = ""
+
 class FloatingService : Service() {
+
+    private val sharedPrefFile = "virtuousVoice"
 
     val db = Firebase.firestore
 
@@ -64,13 +91,17 @@ class FloatingService : Service() {
         return null
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        setTheme(R.style.CustomTabStyle)
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences =  sharedPreferences
+        usertype = sharedPref.getString(USER_TYPE, "").toString()
+        username = sharedPref.getString(USER_NAME, "").toString()
+        userphone = sharedPref.getString(USER_PHONE, "").toString()
+
+
 
         // difference in layout params devices greater than O
         Log.d("TAG","$FOLDER_PATH")
@@ -96,7 +127,13 @@ class FloatingService : Service() {
         mWindowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         mWindowManager.addView(mOverlayView, params)
 
-        startRecording()
+        if (usertype == USER_TYPE_CHILD){
+            Log.d("Floating Service!", "Started Recording")
+            startRecording()
+        }
+        else{
+            Log.d("Floating Service!", "Not Recording")
+        }
 
         return START_STICKY
     }
@@ -104,7 +141,9 @@ class FloatingService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         mWindowManager.removeView(mOverlayView)
-        stopRecorder()
+        if (usertype == USER_TYPE_CHILD){
+            stopRecorder()
+        }
     }
 
 
@@ -138,7 +177,6 @@ class FloatingService : Service() {
         Log.d("TAG", finalPath)
         ref.putFile(Uri.fromFile(file)).addOnSuccessListener {TaskSnapshot->
             val url  = generateURL()
-
             //Get Date
             val sdf = SimpleDateFormat("dd/MM/yyyy")
             val c = Calendar.getInstance()
@@ -149,9 +187,11 @@ class FloatingService : Service() {
             val day = SimpleDateFormat("EEEE", Locale.ENGLISH).format(time.getTime())
 
             val audioSample = hashMapOf(
-                USER_NAME to "gama",
-                USER_PHONE to "+923230000000",
+                USER_NAME to username,
+                USER_PHONE to userphone,
                 AUDIO_LINK to url,
+                NEW_TO_SERVICE to true,
+                NEW_TO_DASHBOARD to true,
                 DATE to date,
                 DAY to day,
                 TOXIC_STATUS to null
@@ -159,9 +199,32 @@ class FloatingService : Service() {
 
             db.collection(TOXIC_AUDIO_COLLECTION).add(audioSample).addOnSuccessListener {
                 Log.d("Firestore", "Audio Added Successfully!")
+                CallApi(url)
             }
+        }
+    }
 
+    private fun CallApi(link: String) {
+        val response = RetrofitInstance.api.MakeApiCall(
+            //Make Api call
+            ToxicApiInput(
+                "$link"
+            )
+        )
+        while (response==null){
 
+        }
+        if (response.isSuccessful){
+            if (response.body()!!.result == 0){
+                Log.d("Tag", "NonToxic")
+            }
+            else{
+                Log.d("Tag", "Toxic")
+            }
+            Log.d("TAG", response.raw().request().url().toString())
+        }else if (!response.isSuccessful){
+            Log.d("TAG", "Not Successful")
+            Log.d("TAG", response.raw().request().url().toString())
         }
     }
 
