@@ -8,9 +8,6 @@ import androidx.room.Query
 import androidx.room.Update
 
 
-
-
-
 @Dao
 interface userInterfaceDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -21,4 +18,5 @@ interface userInterfaceDAO {
 
     @Query("SELECT * FROM users ORDER BY id ASC")
     fun readAllData () : LiveData<List<userTable>>
+
 }

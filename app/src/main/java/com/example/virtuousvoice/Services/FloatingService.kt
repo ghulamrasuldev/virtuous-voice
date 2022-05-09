@@ -1,7 +1,6 @@
 package com.example.virtuousvoice.Services
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.app.Service
 import android.content.ContentValues
 import android.content.Context
@@ -21,14 +20,9 @@ import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import android.widget.Toast
 import com.example.virtuousvoice.Interfaces.RetrofitInstance
 import com.example.virtuousvoice.R
-import com.example.virtuousvoice.database.userViewModel
-import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.AUDIO_LINK
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
@@ -41,18 +35,17 @@ import com.example.virtuousvoice.utilties.Common.USER_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.ToxicApiInput
+import com.example.virtuousvoice.utilties.ToxicApiOutput
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 val sample = "FILE_NAME.mp3"
@@ -172,7 +165,7 @@ class FloatingService : Service() {
     private fun UploadAudio() {
         storageRef = FirebaseStorage.getInstance().reference
         var file = File(finalPath)
-        var ref = storageRef.child("toxicData").child("+923230000000").child("gama").child(fileName)
+        var ref = storageRef.child("toxicData").child(userphone).child(username).child(fileName)
         Log.d("TAG", "$file")
         Log.d("TAG", finalPath)
         ref.putFile(Uri.fromFile(file)).addOnSuccessListener {TaskSnapshot->
@@ -199,32 +192,45 @@ class FloatingService : Service() {
 
             db.collection(TOXIC_AUDIO_COLLECTION).add(audioSample).addOnSuccessListener {
                 Log.d("Firestore", "Audio Added Successfully!")
-                CallApi(url)
+                CallApi(url, it.id, ref)
             }
         }
     }
 
-    private fun CallApi(link: String) {
-        val response = RetrofitInstance.api.MakeApiCall(
-            //Make Api call
-            ToxicApiInput(
-                "$link"
-            )
-        )
-        while (response==null){
+    private fun CallApi(link: String, id: String, ref: StorageReference) {
+        runBlocking{
+            var response: Response<ToxicApiOutput>
+            try {
+                response  = RetrofitInstance.api.MakeApiCall(
+                    //Make Api call
+                    ToxicApiInput(
+                        "$link"
+                    )
+                )
+            } catch (e: IOException){
+                Log.e(ContentValues.TAG, "IOException: You might not have internet connection! $e")
+                return@runBlocking
+            }catch (e: HttpException){
+                Log.e(ContentValues.TAG, "IOException: Unexpected Response! $e")
+                return@runBlocking
+            }
+            if(response.isSuccessful && response.body()!=null){
+                Log.d("TAG", response.body()!!.transcription)
 
-        }
-        if (response.isSuccessful){
-            if (response.body()!!.result == 0){
-                Log.d("Tag", "NonToxic")
+                if (response.body()!!.result == 1){
+                    Log.d("File Name", fileName)
+                    ref.delete()
+                    db.collection(TOXIC_AUDIO_COLLECTION).document(id).update(TOXIC_STATUS, true)
+                    Log.d("Declared", "Toxic")
+
+                }else if (response.body()!!.result == 0){
+                    db.collection(TOXIC_AUDIO_COLLECTION).document(id).delete()
+                    Log.d("Declared", "Non - Toxic")
+                }
             }
             else{
-                Log.d("Tag", "Toxic")
+                Toast.makeText(baseContext, "not working", Toast.LENGTH_SHORT)
             }
-            Log.d("TAG", response.raw().request().url().toString())
-        }else if (!response.isSuccessful){
-            Log.d("TAG", "Not Successful")
-            Log.d("TAG", response.raw().request().url().toString())
         }
     }
 

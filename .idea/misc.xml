@@ -36,13 +36,14 @@
         <entry key="app/src/main/res/layout/captured_voice_card.xml" value="0.43711083437110837" />
         <entry key="app/src/main/res/layout/edit_text_fragment_bg.xml" value="0.3020833333333333" />
         <entry key="app/src/main/res/layout/fragment_childern.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28107349955212163" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/layout_overlay.xml" value="0.2875" />
         <entry key="app/src/main/res/layout/linked_child.xml" value="0.2953125" />
         <entry key="app/src/main/res/layout/linked_child_card.xml" value="0.526543543882984" />
         <entry key="app/src/main/res/layout/update_data_fragment.xml" value="0.27708333333333335" />
         <entry key="app/src/main/res/layout/update_email_fragment.xml" value="0.13240740740740742" />
+        <entry key="app/src/main/res/xml/network_security_config.xml" value="0.1" />
       </map>
     </option>
   </component>

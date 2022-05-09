@@ -29,6 +29,7 @@ import android.content.pm.PackageManager
 
 class MainActivity : AppCompatActivity() {
     private val sharedPrefFile = Common.APP_NAME
+    lateinit var mUserViewModel: userViewModel
 
 
     private val REQUEST_EXTERNAL_STORAGE = 1

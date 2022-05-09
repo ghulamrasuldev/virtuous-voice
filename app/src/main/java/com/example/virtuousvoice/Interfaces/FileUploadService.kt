@@ -15,5 +15,5 @@ import retrofit2.http.Body
 
 interface FileUploadService {
     @POST (PREDICT)
-    fun MakeApiCall(@Body body: ToxicApiInput) :Response<ToxicApiOutput>
+    suspend fun MakeApiCall(@Body body: ToxicApiInput) :Response<ToxicApiOutput>
 }
