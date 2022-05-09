@@ -73,17 +73,13 @@ class ParentService: Service() {
                     val diff = startTime - (document.data[ACTIVE_STATUS] as Long)
                     Log.d("TAG", "Time Difference : $diff")
                     Log.d("TAG", document.data[USER_NAME].toString())
-                    if ((calendar.timeInMillis - document.data[LAST_NOTIFIED] as Long ) > 300000){
+                    if ((calendar.timeInMillis - document.data[LAST_NOTIFIED] as Long ) > 300000 && diff > MAX_GAP_TIME){
                         val notificationText = "Your child ${document.data[USER_NAME]} is not active\n"
                         generateNotification(parent_name, notificationText, (1000..9999999).random())
                         db.collection(LINKED_CHILDS).document(document.id).update(
                             LAST_NOTIFIED, calendar.timeInMillis)
                     }
                     Log.d("TAG", "${document.data[USER_NAME]} is added to List")
-                    if (diff> MAX_GAP_TIME){
-                        Log.d("TAG", "Entered IFF")
-                        list.add(document.data[USER_NAME].toString())
-                    }
                 }
 
             }
