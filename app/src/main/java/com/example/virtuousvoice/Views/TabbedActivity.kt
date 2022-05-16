@@ -2,6 +2,7 @@ package com.example.virtuousvoice.Views
 
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,9 +27,12 @@ class TabbedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabbed)
 
-        Intent(this, ParentService::class.java).also {
-            Log.d("Starting: ", "Parent Service")
-            startService(it)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(Intent(this, ParentService::class.java))
+            Log.d("Started", "Foreground Service")
+        } else {
+            startService(Intent(this, ParentService::class.java))
+            Log.d("Started", "Service")
         }
 
         createTabs()

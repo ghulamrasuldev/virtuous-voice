@@ -32,6 +32,8 @@ object Common {
     const val CHILD_UPDATE_TIME: Long = 10000
     const val PARENT_CHECK_TIME: Long = 30000
     const val MAX_GAP_TIME: Long = 20000
+
+    const val TOXIC_DATA = "toxicData"
     const val LAST_NOTIFIED = "lastNotfied"
 
     const val APP_NAME: String = "virtuous-voice"
@@ -50,7 +52,7 @@ object Common {
     const val NEW_TO_DASHBOARD = "newToDashboard"
     //
     //const val BASE_URL = "http://127.0.0.1:8000/"
-    const val BASE_URL = "https://c446-119-160-98-75.in.ngrok.io/"
+    const val BASE_URL = "https://199c-103-151-43-2.in.ngrok.io"
     const val PREDICT = "predict"
     const val TOXIC_STATUS = "toxicStatus"
     const val TOXIC_AUDIO_COLLECTION = "toxicAudioCollection"

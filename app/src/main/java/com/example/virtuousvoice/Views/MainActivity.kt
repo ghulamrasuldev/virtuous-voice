@@ -22,6 +22,10 @@ import androidx.core.app.ActivityCompat
 
 import android.app.Activity
 import android.content.pm.PackageManager
+import com.google.android.gms.security.ProviderInstaller
+import javax.net.ssl.SSLEngine
+
+import javax.net.ssl.SSLContext
 
 
 
@@ -64,6 +68,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        ProviderInstaller.installIfNeeded(getApplicationContext());
+
+        val sslContext = SSLContext.getInstance("TLSv1.2")
+        sslContext.init(null, null, null)
+        val engine = sslContext.createSSLEngine()
+
         verifyStoragePermissions(this)
 
         var mUserViewModel = ViewModelProvider(this).get(userViewModel::class.java)

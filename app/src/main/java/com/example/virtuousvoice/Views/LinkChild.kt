@@ -19,6 +19,7 @@ import com.example.virtuousvoice.database.userViewModel
 import com.example.virtuousvoice.utilties.Common
 import com.example.virtuousvoice.utilties.Common.ACTIVE_STATUS
 import com.example.virtuousvoice.utilties.Common.FUID
+import com.example.virtuousvoice.utilties.Common.LAST_NOTIFIED
 import com.example.virtuousvoice.utilties.Common.LINKED_CHILDS
 import com.example.virtuousvoice.utilties.Common.USER_EMAIL
 import com.example.virtuousvoice.utilties.Common.USER_NAME
@@ -223,6 +224,7 @@ class LinkChild : AppCompatActivity() {
                                 USER_EMAIL to "",
                                 USER_NAME to _link_child_name.text.toString(),
                                 USER_PHONE to number,
+                                LAST_NOTIFIED to 0L,
                                 ACTIVE_STATUS to calendar.getTimeInMillis(),
                                 Common.DATE to date,
                                 Common.DAY to day

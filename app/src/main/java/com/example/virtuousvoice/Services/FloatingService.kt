@@ -29,6 +29,7 @@ import com.example.virtuousvoice.utilties.Common.DAY
 import com.example.virtuousvoice.utilties.Common.NEW_TO_DASHBOARD
 import com.example.virtuousvoice.utilties.Common.NEW_TO_SERVICE
 import com.example.virtuousvoice.utilties.Common.TOXIC_AUDIO_COLLECTION
+import com.example.virtuousvoice.utilties.Common.TOXIC_DATA
 import com.example.virtuousvoice.utilties.Common.TOXIC_STATUS
 import com.example.virtuousvoice.utilties.Common.USER_NAME
 import com.example.virtuousvoice.utilties.Common.USER_PHONE
@@ -153,6 +154,7 @@ class FloatingService : Service() {
     }
 
     private fun stopRecorder() {
+        Log.d("Stop Recorder; ", "True")
         if (isRecording) {
             recorder.stop()
             recorder.reset()
@@ -163,6 +165,8 @@ class FloatingService : Service() {
     }
 
     private fun UploadAudio() {
+
+        Log.d("Upload Audio Function; ", "True")
         storageRef = FirebaseStorage.getInstance().reference
         var file = File(finalPath)
         var ref = storageRef.child("toxicData").child(userphone).child(username).child(fileName)
@@ -185,6 +189,7 @@ class FloatingService : Service() {
                 AUDIO_LINK to url,
                 NEW_TO_SERVICE to true,
                 NEW_TO_DASHBOARD to true,
+                TOXIC_DATA to "",
                 DATE to date,
                 DAY to day,
                 TOXIC_STATUS to null
@@ -192,12 +197,14 @@ class FloatingService : Service() {
 
             db.collection(TOXIC_AUDIO_COLLECTION).add(audioSample).addOnSuccessListener {
                 Log.d("Firestore", "Audio Added Successfully!")
+                Log.d("Firestore", "url")
                 CallApi(url, it.id, ref)
             }
         }
     }
 
     private fun CallApi(link: String, id: String, ref: StorageReference) {
+        Log.d("Api Call; ", "True")
         runBlocking{
             var response: Response<ToxicApiOutput>
             try {
@@ -220,10 +227,16 @@ class FloatingService : Service() {
                 if (response.body()!!.result == 1){
                     Log.d("File Name", fileName)
                     ref.delete()
-                    db.collection(TOXIC_AUDIO_COLLECTION).document(id).update(TOXIC_STATUS, true)
+                    db.collection(TOXIC_AUDIO_COLLECTION)
+                        .document(id)
+                        .update(
+                            TOXIC_STATUS, true, TOXIC_DATA,
+                            response.body()!!.transcription
+                        )
                     Log.d("Declared", "Toxic")
 
                 }else if (response.body()!!.result == 0){
+                    Log.d("Doument is Non-Toxic", "Deleting")
                     db.collection(TOXIC_AUDIO_COLLECTION).document(id).delete()
                     Log.d("Declared", "Non - Toxic")
                 }
@@ -234,7 +247,7 @@ class FloatingService : Service() {
         }
     }
 
-    private fun generateURL() = first + "3230000000" + "%2F" + "gama" + "%2F" + fileName + last
+    private fun generateURL() = first + userphone.substring(3) + "%2F" + "$username" + "%2F" + fileName + last
 
     private fun generateFileName() = System.currentTimeMillis().toString()
 }
