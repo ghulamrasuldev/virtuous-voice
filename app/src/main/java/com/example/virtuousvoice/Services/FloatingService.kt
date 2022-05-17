@@ -165,7 +165,6 @@ class FloatingService : Service() {
     }
 
     private fun UploadAudio() {
-
         Log.d("Upload Audio Function; ", "True")
         storageRef = FirebaseStorage.getInstance().reference
         var file = File(finalPath)

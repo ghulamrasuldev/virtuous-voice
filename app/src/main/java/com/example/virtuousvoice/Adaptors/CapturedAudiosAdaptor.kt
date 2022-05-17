@@ -5,6 +5,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,18 +44,19 @@ class CapturedAudiosAdaptor(private val voiceList: List<CapturedVoiceData>): Rec
         holder.date.text = currentItem.date
         holder.day.text = currentItem.day
         var mp = MediaPlayer()
+        mp.setAudioStreamType(AudioManager.STREAM_MUSIC)
         var timeDuration = 1
 
 
-        Thread {
-                mp.setAudioStreamType(AudioManager.STREAM_MUSIC)
-        }.start()
+
 
 
         holder.downloadButton.setOnClickListener {
             holder.downloadButton.isVisible = false
             holder.playButton.isVisible = true
-            mp.setDataSource(Common.sample_audio)
+            Log.d("LINK",
+                currentItem.link)
+            mp.setDataSource(currentItem.link + "?alt=media&token=b7813aa8-32e3-43c5-a537-130962fe6a47")
             mp.prepare()
             flag = true
         }
