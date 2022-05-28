@@ -27,6 +27,36 @@
             android:paddingBottom="16dp"/>
 
         <LinearLayout
+            android:id="@+id/_update_info_notification"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/notification_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/update_info"/>
+
+            <TextView
+                android:textColor="@color/primary_color"
+                android:id="@+id/_update_personal_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update Now"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:padding="8dp"
+                android:background="@drawable/ripple_effect"
+                android:elevation="16dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -37,7 +67,8 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="none">
+                android:scrollbars="none"
+                android:paddingBottom="40dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/_captured_voice_notes"

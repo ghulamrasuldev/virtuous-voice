@@ -8,7 +8,7 @@
     android:background="@color/primary_color"
     android:gravity="center"
     android:padding="16dp"
-    tools:context=".Views.WelcomeScreen">
+    tools:context=".Views.PhoneEmailSelection">
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,27 +27,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Continue as"
+            android:text="Continue with"
             android:textColor="@color/white"
             android:fontFamily="@font/montserrat"
             android:textSize="24dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/_sign_in_as_parent"
+            android:id="@+id/_continue_with_email"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:text="Parent"
+            android:text="Email"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/white"
             android:background="@drawable/ripple_effect"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/_welcome_as_child"
+            android:id="@+id/_continue_with_phone"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:text="Child"
+            android:text="Phone Number"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/white"
             android:background="@drawable/ripple_effect"/>

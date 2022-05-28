@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,19 +9,36 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/_test_email"
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/_test_email"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Test Audio"-->
+<!--            android:fontFamily="@font/montserrat"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_margin="4dp"-->
+<!--            android:background="@drawable/ripple_effect"/>-->
+
+        <ImageView
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Test Audio"
+            android:visibility="gone"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOG OUT"
             android:fontFamily="@font/montserrat"
             android:gravity="center"
-            android:background="@drawable/button_background"/>
+            android:layout_margin="4dp"
+            android:background="@drawable/ripple_effect"/>
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

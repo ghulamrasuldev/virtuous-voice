@@ -4,24 +4,124 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_color"
-    android:padding="16dp"
-    android:gravity="center"
+    android:padding="12dp"
     android:orientation="vertical"
-    tools:context=".Views.ParentSignup">
+    android:background="@color/primary_color"
+    tools:context=".Views.ChildDashboard">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/hi_there"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:text="Hi there!"
+        android:textColor="@color/white"
+        android:fontFamily="@font/montserrat"
+        android:layout_margin="4dp"
+        android:textSize="24sp"
+        android:layout_marginBottom="8dp"/>
+    
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/child_dashboard_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
-        <ProgressBar
-            android:id="@+id/_progressBar"
-            style="?android:attr/progressBarStyle"
+    <LinearLayout
+        android:id="@+id/_add_child_info_notification"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@drawable/notification_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@color/primary_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:text="@string/updateEmailText"/>
+
+        <TextView
+            android:textColor="@color/primary_color"
+            android:id="@+id/_update_email_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Now"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:padding="8dp"
+            android:background="@drawable/ripple_effect"
+            android:elevation="16dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/child_instructions"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@drawable/notification_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@color/primary_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Notice, You are in control. We are monitoring your: \n-   Call Records\n-   Your active Status"/>
+
+        <TextView
+            android:textColor="@color/primary_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Instructions:\n-   Avoid using toxic language\n-   Don't try to delete app, you will be reported\n-   Don't logout from app without permissions from parent"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/_btn_logout"
+        android:padding="8dp"
+        android:layout_margin="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:background="@drawable/ripple_effect">
+
+        <TextView
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="20sp"
+            android:text="Logout"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_arrow_right"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/VERIFY_ADD_NUMBER_SECTION"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/child_dashboard_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,6 +133,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:id="@+id/LINK_CHILD_SECTION"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -47,24 +148,11 @@
                 android:textSize="24dp"/>
 
             <EditText
-                android:id="@+id/_link_child_email"
+                android:id="@+id/child_dashboard_number"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:hint="Add parent email"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textColorHint="@color/disabled_white"
-                android:textColor="@color/white"
-                android:fontFamily="@font/montserrat"
-                android:background="@drawable/edit_text_background"/>
-
-            <EditText
-                android:id="@+id/_link_child_name"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:hint="child name"
+                android:hint="Add parent phone"
                 android:textSize="20sp"
                 android:gravity="center"
                 android:textColorHint="@color/disabled_white"
@@ -80,7 +168,7 @@
                 android:gravity="center"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/_btn_link_child"
+                android:id="@+id/_btn_verify_number"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
@@ -89,29 +177,17 @@
                 android:fontFamily="@font/montserrat"
                 android:background="@drawable/ripple_effect"/>
 
-            <TextView
-                android:id="@+id/_child_sign_up_parent_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Go as parent"
-                android:paddingTop="8dp"
-                android:layout_gravity="end"
-                android:textColor="@color/secondary_color"
-                android:fontFamily="@font/montserrat"
-                android:textSize="18dp"
-                android:clickable="true"/>
-
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/_child_signup_verify_layout"
+        android:id="@+id/CHILD_DASHBOARD_OTP_SECTION"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,13 +201,13 @@
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Please verify with 6-digit\nsent on linked email"
+                android:text="Please verify with 6-digit\nsent on linked Phone Number"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
                 android:textSize="24dp"/>
 
             <EditText
-                android:id="@+id/_sign_up_six_digit_code"
+                android:id="@+id/_child_dashboard_otp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
@@ -153,7 +229,7 @@
                 android:gravity="center"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/_btn_sign_up_verify"
+                android:id="@+id/_child_dashboard_verify_otp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"

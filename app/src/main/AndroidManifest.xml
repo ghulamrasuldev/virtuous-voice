@@ -1,55 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.virtuousvoice">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.VirtuousVoice">
+        android:theme="@style/Theme.VirtuousVoice"
+        android:requestLegacyExternalStorage="true"
+        android:windowSoftInputMode="adjustResize"
+        tools:targetApi="m">
         <activity
-            android:name=".RecordAudio"
+            android:name=".Views.ChildDashboard"
             android:exported="true" />
         <activity
-            android:name=".TabbedActivity"
-            android:exported="true" />
+            android:name=".Views.PhoneEmailSelection"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ChildSignup"
-            android:exported="true" />
+            android:name=".Views.LinkChild"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ParentSignup"
-            android:exported="true" />
+            android:name=".Views.RecordAudio"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SignIn"
-            android:exported="true" />
+            android:name=".Views.TabbedActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".WelcomeScreen"
-            android:exported="true" />
+            android:name=".Views.ParentSignup"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".DeviceAdminPolicy"
-            android:exported="true" />
+            android:name=".Views.SignIn"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CreatePin"
-            android:exported="true" />
+            android:name=".Views.WelcomeScreen"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".Views.MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".Services.ChildService"/>
+        <service android:name=".Services.ParentService"/>
+        <service
+            android:name=".Services.FloatingService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver android:name=".Services.CallBroadcastReciever"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

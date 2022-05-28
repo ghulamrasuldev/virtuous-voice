@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_color_variant">
+
+
+    <ProgressBar
+        android:id="@+id/_update_daata_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/_update_data_name"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter your name"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:maxLength="20"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+        android:textColorHint="@color/disabled_white"
+        android:textColor="@color/white"
+        android:fontFamily="@font/montserrat"
+        android:background="@drawable/edit_text_fragment_bg"/>
+
+    <EditText
+        android:id="@+id/_update_data_email"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter your email"
+        android:maxLength="50"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+        android:textColorHint="@color/disabled_white"
+        android:textColor="@color/white"
+        android:fontFamily="@font/montserrat"
+        android:background="@drawable/edit_text_fragment_bg"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/_btn_update_data"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:text="Confirm"
+        android:fontFamily="@font/montserrat"
+        android:background="@drawable/ripple_effect"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/_update_data_space"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="@color/primary_color_variant">
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
