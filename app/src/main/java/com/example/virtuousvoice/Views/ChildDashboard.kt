@@ -83,7 +83,7 @@ class ChildDashboard : AppCompatActivity() {
         val updateEmailFragment = UpdateEmailFragment()
 
         if (userEmail != ""){
-            _update_email_info.isVisible = false
+            _add_child_info_notification.isVisible = false
         }
 
 

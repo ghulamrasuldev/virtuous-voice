@@ -88,7 +88,7 @@ class ParentService: Service() {
                 for(document in documents){
                     if (document.data[USER_PHONE]==userPhone &&document.data[TOXIC_STATUS]!=null && document.data[NEW_TO_SERVICE]==true){
                         generateNotification(parent_name,
-                            "Toxicity Found in your child's (${document.data[USER_NAME]}) call. Expected toxicity is ...${document.data[TOXIC_DATA]}...",
+                            "Toxicity Found in your child's (${document.data[USER_NAME]}) call.",
                             (9999999..99999999).random())
                         db.collection(TOXIC_AUDIO_COLLECTION).document(document.id).update(
                             NEW_TO_SERVICE, false)

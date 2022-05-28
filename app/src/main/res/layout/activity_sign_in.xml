@@ -21,10 +21,13 @@
         android:id="@+id/SIGN_IN_SECTION"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical">
 
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
@@ -34,6 +37,9 @@
             android:textStyle="bold" />
 
         <LinearLayout
+
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -41,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Use this application by"
+                android:text="Use this application by signing"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
                 android:textSize="24dp"/>
@@ -50,7 +56,7 @@
                 android:id="@+id/_sign_in_as"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="signing in as parent"
+                android:text="in as parent"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
                 android:textSize="24dp"/>
@@ -109,6 +115,17 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_baseline_arrow_back_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Please verify with 6-digit\nsent on linked Phone Number"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textSize="24dp"/>
 
         <EditText
             android:id="@+id/_sign_in_entered_otp"

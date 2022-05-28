@@ -54,21 +54,21 @@ class SettingFragment() :
         super.onViewCreated(view, savedInstanceState)
         getData()
         //Listeners
-        _test_email.setOnClickListener {
-            db.collection(USER_COLLECTION)
-                .whereEqualTo(USER_PHONE, userPhone)
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        if (document.data[USER_TYPE].toString() == USER_TYPE_PARENT) {
-                            val intent = Intent(activity, RecordAudio::class.java)
-                            intent.putExtra(PARENT_EMAIL, document.data[USER_EMAIL].toString())
-                            intent.putExtra(CHILD_NAME, userName)
-                            startActivity(intent)
-                        }
-                    }
-                }
-        }
+//        _test_email.setOnClickListener {
+//            db.collection(USER_COLLECTION)
+//                .whereEqualTo(USER_PHONE, userPhone)
+//                .get()
+//                .addOnSuccessListener { documents ->
+//                    for (document in documents) {
+//                        if (document.data[USER_TYPE].toString() == USER_TYPE_PARENT) {
+//                            val intent = Intent(activity, RecordAudio::class.java)
+//                            intent.putExtra(PARENT_EMAIL, document.data[USER_EMAIL].toString())
+//                            intent.putExtra(CHILD_NAME, userName)
+//                            startActivity(intent)
+//                        }
+//                    }
+//                }
+//        }
 
         _logout.setOnClickListener{
             image.isVisible = true

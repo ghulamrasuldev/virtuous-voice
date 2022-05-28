@@ -10,18 +10,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/_test_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Test Audio"
-            android:fontFamily="@font/montserrat"
-            android:gravity="center"
-            android:layout_margin="4dp"
-            android:background="@drawable/ripple_effect"/>
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/_test_email"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Test Audio"-->
+<!--            android:fontFamily="@font/montserrat"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_margin="4dp"-->
+<!--            android:background="@drawable/ripple_effect"/>-->
 
         <ImageView
             android:id="@+id/image"

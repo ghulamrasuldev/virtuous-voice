@@ -54,6 +54,7 @@
                 android:layout_marginTop="10dp"
                 android:hint="Add parent phone"
                 android:textSize="20sp"
+                android:inputType="number"
                 android:gravity="center"
                 android:textColorHint="@color/disabled_white"
                 android:textColor="@color/white"

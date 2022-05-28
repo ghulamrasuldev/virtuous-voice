@@ -52,7 +52,7 @@ object Common {
     const val NEW_TO_DASHBOARD = "newToDashboard"
     //
     //const val BASE_URL = "http://127.0.0.1:8000/"
-    const val BASE_URL = "https://6a6c-103-151-43-2.in.ngrok.io"
+    const val BASE_URL = "https://5715-111-68-103-254.in.ngrok.io"
     const val PREDICT = "predict"
     const val TOXIC_STATUS = "toxicStatus"
     const val TOXIC_AUDIO_COLLECTION = "toxicAudioCollection"
@@ -88,8 +88,6 @@ object Common {
     var FUID: String = ""
     val db = Firebase.firestore
     val sample_audio = "https://firebasestorage.googleapis.com/v0/b/virtuousvoice-7efd1.appspot.com/o/toxicData%2Fhello%40gmail.com%2Fghulamrasuldev%2Fsample.mp3?alt=media&token=b7813aa8-32e3-43c5-a537-130962fe6a47"
-
-
 
     fun sleep(){
         Handler(Looper.getMainLooper()).postDelayed({

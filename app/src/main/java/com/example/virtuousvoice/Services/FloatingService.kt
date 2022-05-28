@@ -1,6 +1,9 @@
 package com.example.virtuousvoice.Services
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.ContentValues
 import android.content.Context
@@ -8,6 +11,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.PixelFormat
 import android.media.MediaRecorder
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -21,8 +25,10 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import com.example.virtuousvoice.Interfaces.RetrofitInstance
 import com.example.virtuousvoice.R
+import com.example.virtuousvoice.Views.TabbedActivity
 import com.example.virtuousvoice.utilties.Common.AUDIO_LINK
 import com.example.virtuousvoice.utilties.Common.DATE
 import com.example.virtuousvoice.utilties.Common.DAY
@@ -89,6 +95,7 @@ class FloatingService : Service() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
+        parmanentNotification("Hi $username")
         val sharedPreferences: SharedPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         val sharedPref: SharedPreferences =  sharedPreferences
         usertype = sharedPref.getString(USER_TYPE, "").toString()
@@ -161,48 +168,60 @@ class FloatingService : Service() {
         }
         recorder.release()
 
+        //ConvertAudio()
         UploadAudio()
     }
+
+//    private fun ConvertAudio() {
+//        val file = File(finalPath)
+//
+//        try {
+//            val converter = audioConverter(file, file2)
+//        }catch  (e:IOException) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private fun UploadAudio() {
         Log.d("Upload Audio Function; ", "True")
         storageRef = FirebaseStorage.getInstance().reference
         var file = File(finalPath)
         var ref = storageRef.child("toxicData").child(userphone).child(username).child(fileName)
+        val url = generateURL()
         Log.d("TAG", "$file")
         Log.d("TAG", finalPath)
         ref.putFile(Uri.fromFile(file)).addOnSuccessListener {TaskSnapshot->
-            val url  = generateURL()
-            //Get Date
-            val sdf = SimpleDateFormat("dd/MM/yyyy")
-            val c = Calendar.getInstance()
-            val date = sdf.format(c.time)
+                Log.d("URL", url)
+                //Get Date
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                val c = Calendar.getInstance()
+                val date = sdf.format(c.time)
 
-            //Get Day
-            val time = c.getTime()
-            val day = SimpleDateFormat("EEEE", Locale.ENGLISH).format(time.getTime())
+                //Get Day
+                val time = c.getTime()
+                val day = SimpleDateFormat("EEEE", Locale.ENGLISH).format(time.getTime())
 
-            val audioSample = hashMapOf(
-                USER_NAME to username,
-                USER_PHONE to userphone,
-                AUDIO_LINK to url,
-                NEW_TO_SERVICE to true,
-                NEW_TO_DASHBOARD to true,
-                TOXIC_DATA to "",
-                DATE to date,
-                DAY to day,
-                TOXIC_STATUS to null
-            )
+                val audioSample = hashMapOf(
+                    USER_NAME to username,
+                    USER_PHONE to userphone,
+                    AUDIO_LINK to url,
+                    NEW_TO_SERVICE to true,
+                    NEW_TO_DASHBOARD to true,
+                    TOXIC_DATA to "",
+                    DATE to date,
+                    DAY to day,
+                    TOXIC_STATUS to null
+                )
 
-            db.collection(TOXIC_AUDIO_COLLECTION).add(audioSample).addOnSuccessListener {
-                Log.d("Firestore", "Audio Added Successfully!")
-                Log.d("Firestore", "url")
-                CallApi(url, it.id, ref)
-            }
+                db.collection(TOXIC_AUDIO_COLLECTION).add(audioSample).addOnSuccessListener {
+                    Log.d("Firestore", "Audio Added Successfully!")
+                    Log.d("Firestore", "url")
+                    CallApi(url, it.id, ref, url)
+                }
         }
     }
 
-    private fun CallApi(link: String, id: String, ref: StorageReference) {
+    private fun CallApi(link: String, id: String, ref: StorageReference, url:String) {
         Log.d("Api Call; ", "True")
         runBlocking{
             var response: Response<ToxicApiOutput>
@@ -225,17 +244,18 @@ class FloatingService : Service() {
 
                 if (response.body()!!.result == 1){
                     Log.d("File Name", fileName)
-                    ref.delete()
                     db.collection(TOXIC_AUDIO_COLLECTION)
                         .document(id)
                         .update(
-                            TOXIC_STATUS, true, TOXIC_DATA,
-                            response.body()!!.transcription
+                            TOXIC_STATUS, true,
+                            TOXIC_DATA, response.body()!!.transcription,
+                            AUDIO_LINK, url
                         )
                     Log.d("Declared", "Toxic")
 
                 }else if (response.body()!!.result == 0){
                     Log.d("Doument is Non-Toxic", "Deleting")
+                    ref.delete()
                     db.collection(TOXIC_AUDIO_COLLECTION).document(id).delete()
                     Log.d("Declared", "Non - Toxic")
                 }
@@ -249,4 +269,26 @@ class FloatingService : Service() {
     private fun generateURL() = first + userphone.substring(3) + "%2F" + "$username" + "%2F" + fileName + last
 
     private fun generateFileName() = System.currentTimeMillis().toString()
+
+    private fun parmanentNotification(parent_name: String) {
+
+        val intent = Intent(this, TabbedActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0 /* request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val builder = NotificationCompat.Builder(this, "Hello")
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setContentText("Running Virtuous Voice")
+            .setSmallIcon(R.drawable.icon_child)
+            .setContentIntent(pendingIntent)
+            .setOnlyAlertOnce(true)
+
+        val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel("Hello",
+                "Channel human readable title",
+                NotificationManager.IMPORTANCE_DEFAULT)
+            mNotificationManager.createNotificationChannel(channel)
+        }
+        val notification = builder.build()
+        startForeground(9999, notification)
+    }
 }
