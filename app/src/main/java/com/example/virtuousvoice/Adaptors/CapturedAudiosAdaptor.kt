@@ -81,7 +81,6 @@ class CapturedAudiosAdaptor(private val voiceList: List<CapturedVoiceData>): Rec
         }
 
         holder.playButton.setOnClickListener {
-
             holder.newToDashboard.isVisible = false
             holder.playButton.isVisible = false
             holder.stopButton.isVisible = true

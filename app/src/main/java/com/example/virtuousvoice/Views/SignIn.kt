@@ -24,6 +24,7 @@ import com.example.virtuousvoice.utilties.Common.USER_PHONE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_CHILD
 import com.example.virtuousvoice.utilties.Common.USER_TYPE_PARENT
+import com.example.virtuousvoice.utilties.Common.isValidPhone
 import com.example.virtuousvoice.utilties.Common.sleep
 import com.example.virtuousvoice.utilties.Common.trimNumber
 import com.example.virtuousvoice.utilties.Common.userEmail
@@ -122,16 +123,16 @@ class SignIn : AppCompatActivity() {
         }
 
         //Resend OTP
-        _sign_in_back.setOnClickListener{
-            SIGN_IN_SECTION.isVisible= true
-            OTP_SECTION.isVisible = false
-        }
+//        _sign_in_back.setOnClickListener{
+//            SIGN_IN_SECTION.isVisible= true
+//            OTP_SECTION.isVisible = false
+//        }
 
 
         //Verify OTP
 
         _btn_sign_in_confirm_otp.setOnClickListener {
-            Toast.makeText(this, sentToken, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, sentToken, Toast.LENGTH_SHORT).show()
             val credential = PhoneAuthProvider.getCredential(sentToken, _sign_in_entered_otp.text.toString())
             signInWithPhoneAuthCredential(credential)
         }
@@ -143,13 +144,19 @@ class SignIn : AppCompatActivity() {
         // get the phone number from edit text and append the country cde with it
         if (number.isNotEmpty()){
             number = "+92${trimNumber(number)}"
-            sendVerificationCode(number)
+            if (isValidPhone(number)){
+                sendVerificationCode(number)
+            }else{
+                Toast.makeText(this,"Enter thr right phone number", Toast.LENGTH_SHORT).show()
+                _progressBar.isVisible=false;
+            }
         }else{
-            Toast.makeText(this,"Enter mobile number", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Enter phone number", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun sendVerificationCode(number: String) {
+
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(number) // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
