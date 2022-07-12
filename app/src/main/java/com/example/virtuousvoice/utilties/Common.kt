@@ -52,7 +52,7 @@ object Common {
     const val NEW_TO_DASHBOARD = "newToDashboard"
     //
     //const val BASE_URL = "http://127.0.0.1:8000/"
-    const val BASE_URL = "https://5715-111-68-103-254.in.ngrok.io"
+    const val BASE_URL = "https://86c8-119-160-97-66.in.ngrok.io"
     const val PREDICT = "predict"
     const val TOXIC_STATUS = "toxicStatus"
     const val TOXIC_AUDIO_COLLECTION = "toxicAudioCollection"
